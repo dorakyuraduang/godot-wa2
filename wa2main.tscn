@@ -1,0 +1,60 @@
+[gd_scene load_steps=9 format=3 uid="uid://bsrlgftq373md"]
+
+[ext_resource type="Script" path="res://src/wa2main.gd" id="1_7jmlm"]
+[ext_resource type="Script" path="res://src/wa2sound.gd" id="2_1c68e"]
+[ext_resource type="Script" path="res://src/components/Wa2bg.gd" id="3_xbmln"]
+[ext_resource type="Script" path="res://src/components/wa2effect.gd" id="4_1ul3l"]
+[ext_resource type="PackedScene" uid="uid://dmufruyuv4wcg" path="res://src/components/wa2messagebox.tscn" id="5_dr0jn"]
+[ext_resource type="Shader" path="res://src/shader/mix.gdshader" id="5_ngges"]
+[ext_resource type="Script" path="res://src/components/wa2chars.gd" id="6_ldynv"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_yb0y8"]
+shader = ExtResource("5_ngges")
+shader_parameter/time = 0.0
+
+[node name="Wa2Main" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_7jmlm")
+
+[node name="Wa2Sound" type="Node" parent="."]
+script = ExtResource("2_1c68e")
+
+[node name="Wa2Bg" type="Sprite2D" parent="."]
+position = Vector2(640, 360)
+script = ExtResource("3_xbmln")
+
+[node name="Wa2Chars" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_yb0y8")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("6_ldynv")
+
+[node name="Wa2Effect" type="Node2D" parent="."]
+visible = false
+script = ExtResource("4_1ul3l")
+
+[node name="Wa2MessageBox" parent="." instance=ExtResource("5_dr0jn")]
+visible = false
+modulate = Color(1, 1, 1, 0)
+z_index = 2
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+offset_left = -640.0
+offset_top = -208.0
+offset_right = 640.0
+offset_bottom = 0.0
+grow_vertical = 0
+mouse_filter = 2
