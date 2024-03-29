@@ -1,0 +1,39 @@
+[gd_scene load_steps=4 format=3 uid="uid://bxa3gtl880ece"]
+
+[ext_resource type="Texture2D" uid="uid://fotv4lu63j1j" path="res://assets/grp/sys_01000.tga" id="1_eobji"]
+[ext_resource type="Texture2D" uid="uid://baqclfhgruuhy" path="res://assets/grp/sys_05012.tga" id="1_fpsiy"]
+[ext_resource type="Texture2D" uid="uid://r25dhney8o20" path="res://assets/grp/sys_09000.tga" id="3_6yasr"]
+
+[node name="SavePage" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextureRect2" type="TextureRect" parent="."]
+layout_mode = 0
+offset_right = 304.0
+offset_bottom = 168.0
+texture = ExtResource("1_fpsiy")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("1_eobji")
+
+[node name="TextureRect3" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -640.0
+offset_top = -56.0
+offset_right = 640.0
+grow_horizontal = 2
+grow_vertical = 0
+texture = ExtResource("3_6yasr")

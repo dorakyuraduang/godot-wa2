@@ -3,14 +3,13 @@ class_name Wa2Main
 var game_state=0
 var game_await:=false
 var lscr=null
-var bg_type:=0
 var label:=0
 var ws:Wa2Script=Wa2Script.new()
 @onready var chars:Wa2Chars=$Wa2Chars
-@onready var sound:Wa2Sound=$Wa2Sound
-@onready var bg:Wa2Bg=$Wa2Bg
+@onready var bg:Sprite2D=$Wa2Bg
 @onready var message_box:Wa2MessageBox=$Wa2MessageBox
 @onready var effect:Wa2Effect=$Wa2Effect
+@onready var backlog=$Pages/BackLog
 var func_lut={
 	0xd2:move_command,
 	0x92:bg_command,
@@ -18,8 +17,8 @@ var func_lut={
 	0xaa:bg_type_command,
 	0x9f:stop_bgm_command,
 	0xa6:stop_se_command,
-	0xc2:await_command,
-	0xec:await_command,
+	0xc2:wait_command,
+	0xec:wait_command,
 	0xa5:se_command,
 	0x9e:bgm_command,
 	0x8a:voice_command,
@@ -38,22 +37,23 @@ var func_lut={
 	0xe7:shake_command
 }
 func _ready():
+	Globals.message_box=message_box
+	Globals.backlog=backlog
 	load_script(6001)
+	while (true):
+		await get_tree().process_frame
+		await  parse_command()
 func _physics_process(delta):
 	if Input.is_action_pressed("skip"):
-		Globals.skip_flag=true
-		clicked()
+		Globals.ctrl_pressed=true
 	else:
-		Globals.skip_flag=false
-	if game_state==1 and !game_await:
-		parse_command()
+		Globals.ctrl_pressed=false
 	#set_bg_type(0)
 	#change_bg(1005,1,60)
 	#await get_tree().create_timer(2.0).timeout
 	#change_bg(1005,2,60)
 func load_script(id:int):
 	ws.load(id)
-	game_state=1
 func parse_command():
 	var parse_end:=false
 	var args:Array
@@ -64,6 +64,9 @@ func parse_command():
 				match ws.read_int():
 					0x1e:
 						args=[]
+					0x10:
+						var a=args.pop_back()
+						args[args.size()-1]+=a
 			3:
 				args.append(ws.str_args[ws.read_int()])
 			5:
@@ -78,35 +81,28 @@ func parse_command():
 					cb=func_lut[func_idx]
 				parse_end=true
 	if cb:
-		cb.callv(args)
+		print(cb)
+		print(args)
+		await  cb.callv(args)
 func cl_command(char:int,ef:int,frame:int):
-	game_await=true
 	await chars.cl(char,ef,frame)
-	game_await=false
 func bgm_command(id:int,v1:int,loop:int,volume:int):
-	sound.play_bgm(id,bool(loop),volume)
-func await_command(frame:int,v1:int=0,v2:int=0,v3:int=0):
-	game_await=true
-	for i in frame:
-		await  get_tree().physics_frame
-		if Globals.skip_flag:
-			break
-	game_await=false
+	Sound.play_bgm(id,bool(loop),volume)
+func wait_command(frame:int,v1:int=0,v2:int=0,v3:int=0):
+	Events.add_timer(frame)
+	await Events.timeout
 func stop_bgm_command(frame:int):
-	sound.stop_bgm(frame)
+	Sound.stop_bgm(frame)
 func set_label(a:int,id:int):
-	label=id
+	Globals.label=id
 func set_bg_type(type:int):
-	bg_type=type
-	await get_tree().physics_frame
-func bg_command(ef_id:int,id:int,no:int,frame:int,u1,u2,u3,u4,u5):
-	game_await=true
-	var image=Wa2Res.get_bg_image(id,bg_type,no)
+	Globals.bg_type=type
+func bg_command(ef_id:int,id:int,no:int,frame:int,u1,u2,u3,u4,v5):
+	
+	var image=Wa2Res.get_bg_image(id,Globals.bg_type,no)
 	await change_bg(image,frame)
 	chars.clear()
-	game_await=false
 func bg2_command(ef_id:int,id:int,no:int,frame:int,v1,v2,v3,v4,v5,v6):
-	game_await=true
 	chars.duration=frame
 	chars.draw_image()
 	chars.z_index=1
@@ -114,18 +110,16 @@ func bg2_command(ef_id:int,id:int,no:int,frame:int,v1,v2,v3,v4,v5,v6):
 	if id>=100000:
 		image=bg.texture
 	else:
-		image=Wa2Res.get_bg_image(id,bg_type,no)
+		image=Wa2Res.get_bg_image(id,Globals.bg_type,no)
 		
 	await change_bg(image,frame)
 	chars.z_index=0
 	game_await=false
 func bg3_command(ef_id:int,id:int,no:int,frame:int,v1,offset,v2,scale_x,scale_y,v6,v7):
-	game_await=true
-	var image=Wa2Res.get_bg_image(id,bg_type,no)
+	var image=Wa2Res.get_bg_image(id,Globals.bg_type,no)
 	await change_bg(image,frame,offset,Vector2(scale_x,scale_y))
 	chars.clear()
-	game_await=false
-func bg4_command(ef_id:int,id:int,no:int,frame:int,v1:int,v2:int,v3:int,v4:int,v5:int):
+func bg4_command(ef_id:int,id:int,no:int,frame:int,v1:int,v2:int,v3:int,v4:int,v5):
 	game_await=true
 	var image=Wa2Res.get_cg_image(id,no)
 	await change_bg(image,frame)
@@ -135,7 +129,7 @@ func bg_type_command(type:int):
 	set_bg_type(type)
 	return
 func se_command(channel:int,id:int,frame:int,loop:int,volume:int,v4:int):
-	sound.play_se(channel,id,bool(loop),frame,volume)
+	Sound.play_se(channel,id,bool(loop),frame,volume)
 func change_bg(image:Texture2D,frame:int,offset:int=0,_scale:Vector2=Vector2.ONE):
 	Globals.move_flag=false
 	effect.image=image
@@ -146,7 +140,7 @@ func change_bg(image:Texture2D,frame:int,offset:int=0,_scale:Vector2=Vector2.ONE
 	effect.offset.x=offset
 	game_await=true
 	while (await effect.do_effect()):
-		if Globals.skip_flag:
+		if Globals.is_skip():
 			break
 	bg.scale=_scale
 	bg.offset.x=offset
@@ -156,19 +150,18 @@ func change_bg(image:Texture2D,frame:int,offset:int=0,_scale:Vector2=Vector2.ONE
 func label_command(v1:int,id:int):
 	label=id
 func voice_command(char:int,v1:int,v2:int,v3:int,id:int):
-	sound.play_voice(label,char,id)
+	Globals.cur_voice="%04d_%04d_%02d.OGG"%[label,id,char]
 func stop_se_command(channel:int,frame:int):
-	sound.stop_se(channel,frame)
+	Sound.stop_se(channel,frame)
 func _gui_input(event):
 	if is_click(event):
-		clicked()
-func clicked():
-	if Globals.click_state==Consts.ClickState.NEW_PAGE:
-		Globals.click_state=Consts.ClickState.CLICK_EOL
-	elif Globals.click_state==Consts.ClickState.CLICK_EOL:
-		Globals.click_state=Consts.ClickState.NONE
-		message_box.await_sprite.hide()
-		Events.emit_signal("clicked")
+		if Globals.text_state==1:
+			Globals.click_text_state=1
+		elif Globals.text_state==2:
+			if !Globals.text_on_flag:
+				message_box.on(1)
+			else:
+				Globals.click_text_state=2
 func is_click(event):
 	if Globals.os_name=="Android":
 		if event is InputEventScreenDrag or (event is InputEventScreenTouch and event.is_pressed()):
@@ -180,21 +173,25 @@ func is_click(event):
 	else:
 		return false
 func text_command(text:String,idx:int,click_flag:int):
-	game_await=true
 	if !message_box.visible:
 		await message_box.on()
-	Globals.click_state=Consts.ClickState.NEW_PAGE
-	message_box.set_text(text)
-	game_await=false
+	if Globals.cur_voice:
+		Sound.play_voice(Globals.cur_voice)
+	Globals.cur_text=text.replace("\\n","\n")
+	Globals.add_back_info()
+	message_box.update_text()
+	await message_box.wait_click
+	Globals.cur_text=""
+	Globals.cur_name=""
+	Globals.cur_voice=""
 func name_command(str):
 	if int(str)==1:
-		message_box.set_char_name("")
+		Globals.cur_name=""
 	else:
-		message_box.set_char_name(str)
+		Globals.cur_name=str
 func click_command(v1:int):
-	game_await=true
-	await Events.clicked
-	game_await=false
+	Events.add_event(Consts.EventMode.WAIT_CLICK)
+	await Events.click_text
 #func parser_func():
 	#pass
 #func _physics_process(delta):
@@ -202,20 +199,18 @@ func click_command(v1:int):
 		#while (!game_await):
 			#parser_func()
 func textoff_command(v1:int,efc:int):
-	game_await=true
 	await message_box.off()
-	game_await=false
-func char_command(char:int,id:int,no:int,pos:int,v1:int,v2:int,frame:int,v3:int,v4:int):
-	game_await=true
-	var image=Wa2Res.get_char_image(char,id,no)
+func char_command(char:int,id:int,pos:int,v1:int,v2:int,frame:int,v3:int,v4:int):
+	var image=Wa2Res.get_char_image(char,id)
 	chars.set_char(char,pos,image)
 	chars.duration=frame
 	await chars.draw_image()
-	game_await=false
-func char2_command(char:int,id:int,no:int,pos:int,v1:int,v2:int,v3:int,v4:int):
-	var image=Wa2Res.get_char_image(char,id,no)
+func char2_command(char:int,id:int,pos:int,v1:int,v2:int,v3:int,v4:int):
+	var image=Wa2Res.get_char_image(char,id)
 	chars.set_char(char,pos,image)
 func move_command(offset:int,v1:int,frame:int,v2:int,v3:int):
+	bg_move(offset,frame)
+func bg_move(offset,frame):
 	var counter=0
 	Globals.move_flag=true
 	var start_offset=bg.offset.x
@@ -229,9 +224,9 @@ func move_command(offset:int,v1:int,frame:int,v2:int,v3:int):
 func go_command(id:String,v1:int):
 	load_script(int(id))
 func sewait_command(c:int):
-	game_await=true
-	await sound.se_audios[c].finished
-	game_await=false
+	Events.wait_se_channel=c
+	Events.add_event(Consts.EventMode.WAIT_SE)
+	await Events.se_finished
 #char2 35 4 2000 1 0 0 15 256 128
 #35 3 2000 1 0 256 128 0
 func shake_command():

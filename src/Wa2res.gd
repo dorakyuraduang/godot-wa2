@@ -16,7 +16,7 @@ func get_bgm_stream( id:int,loop:=false):
 			return load("%sBGM_%03d_A.OGG"%[Consts.BGM_PATH,id])
 		else:
 			return load("%sBGM_%03d_B.OGG"%[Consts.BGM_PATH,id])
-func get_voice_stream(label:int,char:int,id:int):
-	return load("%s%04d_%04d_%02d.OGG"%[Consts.VOICE_PATH,label,id,char])
-func get_char_image(char:int,id:int,no:int):
-	return Image.load_from_file("%s%s%06d.tga"%[Consts.CHAR_IMAGE_PATH,Consts.CHAR_NAMES[char],(id+no)])
+func get_voice_stream(file_name:String):
+	return load("%s%s"%[Consts.VOICE_PATH,file_name])
+func get_char_image(char:int,id:int):
+	return Image.load_from_file("%s%s%06d.tga"%[Consts.CHAR_IMAGE_PATH,Consts.CHAR_NAMES[char],id])

@@ -1,0 +1,177 @@
+[gd_scene load_steps=14 format=3 uid="uid://x2dhyovke074"]
+
+[ext_resource type="Script" path="res://src/ui/back_log.gd" id="1_1eiu2"]
+[ext_resource type="Texture2D" uid="uid://d1ocoy4phf5x0" path="res://assets/grp/sys_00032.tga" id="1_qiln2"]
+[ext_resource type="Texture2D" uid="uid://cbgrncmmskonl" path="res://assets/grp/sys_00033.tga" id="2_gnm1g"]
+[ext_resource type="Texture2D" uid="uid://r25dhney8o20" path="res://assets/grp/sys_09000.tga" id="3_17akm"]
+[ext_resource type="PackedScene" uid="uid://bx1jvhk4mbxo" path="res://src/back_message.tscn" id="4_54ako"]
+[ext_resource type="Texture2D" uid="uid://ix0xrsteos3n" path="res://assets/grp/sys_00030.tga" id="5_u8esw"]
+[ext_resource type="Texture2D" uid="uid://bkt72x50htjvp" path="res://assets/grp/sys_09100.tga" id="7_68tgy"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_eo2dx"]
+atlas = ExtResource("5_u8esw")
+region = Rect2(0, 0, 32, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lmag3"]
+atlas = ExtResource("5_u8esw")
+region = Rect2(0, 48, 32, 544)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xl6je"]
+atlas = ExtResource("5_u8esw")
+region = Rect2(64, 48, 16, 88)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hkie8"]
+atlas = ExtResource("5_u8esw")
+region = Rect2(0, 592, 32, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qfm44"]
+atlas = ExtResource("7_68tgy")
+region = Rect2(0, 0, 56, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_loslw"]
+atlas = ExtResource("7_68tgy")
+region = Rect2(0, 48, 56, 24)
+
+[node name="BackLog" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_1eiu2")
+
+[node name="TextureRect2" type="TextureRect" parent="."]
+layout_mode = 0
+offset_right = 1280.0
+offset_bottom = 40.0
+texture = ExtResource("1_qiln2")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+custom_minimum_size = Vector2(848, 648)
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -426.0
+offset_top = 29.0
+offset_right = 422.0
+offset_bottom = 677.0
+grow_horizontal = 2
+texture = ExtResource("2_gnm1g")
+expand_mode = 1
+
+[node name="TextureRect3" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -640.0
+offset_top = -56.0
+offset_right = 640.0
+grow_horizontal = 2
+grow_vertical = 0
+texture = ExtResource("3_17akm")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+custom_minimum_size = Vector2(646, 0)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -426.0
+offset_top = -331.0
+offset_right = 422.0
+offset_bottom = 315.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_constants/separation = 0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(800, 0)
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="BackMessage" parent="MarginContainer/HBoxContainer/VBoxContainer" instance=ExtResource("4_54ako")]
+layout_mode = 2
+
+[node name="BackMessage2" parent="MarginContainer/HBoxContainer/VBoxContainer" instance=ExtResource("4_54ako")]
+layout_mode = 2
+
+[node name="BackMessage3" parent="MarginContainer/HBoxContainer/VBoxContainer" instance=ExtResource("4_54ako")]
+layout_mode = 2
+
+[node name="BackMessage4" parent="MarginContainer/HBoxContainer/VBoxContainer" instance=ExtResource("4_54ako")]
+layout_mode = 2
+
+[node name="Scroll" type="VBoxContainer" parent="MarginContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="UpButton" type="TextureButton" parent="MarginContainer/HBoxContainer/Scroll"]
+layout_mode = 2
+texture_normal = SubResource("AtlasTexture_eo2dx")
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/HBoxContainer/Scroll"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+texture = SubResource("AtlasTexture_lmag3")
+
+[node name="Control" type="Control" parent="MarginContainer/HBoxContainer/Scroll/TextureRect"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -8.0
+offset_top = -266.0
+offset_right = 8.0
+offset_bottom = 266.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="SrollBar" type="TextureRect" parent="MarginContainer/HBoxContainer/Scroll/TextureRect/Control"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -8.0
+offset_right = 8.0
+offset_bottom = 88.0
+grow_horizontal = 2
+texture = SubResource("AtlasTexture_xl6je")
+
+[node name="DownButton" type="TextureButton" parent="MarginContainer/HBoxContainer/Scroll"]
+layout_mode = 2
+texture_normal = SubResource("AtlasTexture_hkie8")
+
+[node name="TextureButton" type="TextureButton" parent="."]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -89.0
+offset_top = -34.0
+offset_right = -33.0
+offset_bottom = -10.0
+grow_horizontal = 0
+grow_vertical = 0
+texture_normal = SubResource("AtlasTexture_qfm44")
+texture_pressed = SubResource("AtlasTexture_loslw")
+
+[connection signal="button_down" from="MarginContainer/HBoxContainer/Scroll/UpButton" to="." method="_on_up_button_button_down"]
+[connection signal="button_down" from="MarginContainer/HBoxContainer/Scroll/DownButton" to="." method="_on_down_button_button_down"]
+[connection signal="button_down" from="TextureButton" to="." method="_on_texture_button_button_down"]

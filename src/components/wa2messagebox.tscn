@@ -1,10 +1,11 @@
-[gd_scene load_steps=127 format=3 uid="uid://dmufruyuv4wcg"]
+[gd_scene load_steps=151 format=3 uid="uid://dmufruyuv4wcg"]
 
 [ext_resource type="Script" path="res://src/components/wa2messagebox.gd" id="1_tv1cr"]
 [ext_resource type="Texture2D" uid="uid://dyh4udm10344k" path="res://assets/grp/sys_00001.tga" id="2_2btrp"]
 [ext_resource type="Texture2D" uid="uid://x4e8phecuebd" path="res://assets/grp/page_02.tga" id="2_6g2ja"]
 [ext_resource type="Texture2D" uid="uid://on255ij2s43i" path="res://assets/grp/sys_00000.tga" id="3_wovaf"]
 [ext_resource type="FontFile" uid="uid://8lmuk1m2rsdk" path="res://assets/fonts/simhei.ttf" id="4_1akk2"]
+[ext_resource type="Texture2D" uid="uid://2x1csqfhceel" path="res://assets/grp/sys_00010.tga" id="6_fk6if"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_k573s"]
 atlas = ExtResource("2_6g2ja")
@@ -854,70 +855,159 @@ animations = [{
 "speed": 60.0
 }]
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_hwecf"]
+atlas = ExtResource("6_fk6if")
+region = Rect2(120, 0, 40, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ac3q5"]
+atlas = ExtResource("6_fk6if")
+region = Rect2(120, 80, 40, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vwqt2"]
+atlas = ExtResource("6_fk6if")
+region = Rect2(120, 40, 40, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3stkr"]
+atlas = ExtResource("6_fk6if")
+region = Rect2(160, 0, 40, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_l0wy8"]
+atlas = ExtResource("6_fk6if")
+region = Rect2(160, 80, 40, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0c7x8"]
+atlas = ExtResource("6_fk6if")
+region = Rect2(160, 40, 40, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_603k7"]
+atlas = ExtResource("6_fk6if")
+region = Rect2(80, 0, 40, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yud4x"]
+atlas = ExtResource("6_fk6if")
+region = Rect2(80, 80, 40, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ad4l1"]
+atlas = ExtResource("6_fk6if")
+region = Rect2(80, 40, 40, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_l4wiw"]
+atlas = ExtResource("6_fk6if")
+region = Rect2(200, 0, 40, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cgq2e"]
+atlas = ExtResource("6_fk6if")
+region = Rect2(200, 80, 40, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8v50n"]
+atlas = ExtResource("6_fk6if")
+region = Rect2(240, 0, 40, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yvyqg"]
+atlas = ExtResource("6_fk6if")
+region = Rect2(240, 80, 40, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_l8q8a"]
+atlas = ExtResource("6_fk6if")
+region = Rect2(280, 0, 40, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jhrve"]
+atlas = ExtResource("6_fk6if")
+region = Rect2(280, 80, 40, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kdqnb"]
+atlas = ExtResource("6_fk6if")
+region = Rect2(320, 0, 40, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_k375j"]
+atlas = ExtResource("6_fk6if")
+region = Rect2(320, 80, 40, 40)
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_yfqof"]
+load_path = "res://.godot/imported/sys_00011.tga-a7550ff07c62b8024ec3c2a784c7e374.ctex"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1exfh"]
+atlas = SubResource("CompressedTexture2D_yfqof")
+region = Rect2(204, 64, 40, 40)
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_jcxo8"]
+load_path = "res://.godot/imported/sys_00011.tga-a7550ff07c62b8024ec3c2a784c7e374.ctex"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3vweg"]
+atlas = SubResource("CompressedTexture2D_jcxo8")
+region = Rect2(244, 64, 40, 40)
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_y0nv3"]
+load_path = "res://.godot/imported/sys_00011.tga-a7550ff07c62b8024ec3c2a784c7e374.ctex"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_adps2"]
+atlas = SubResource("CompressedTexture2D_y0nv3")
+region = Rect2(284, 64, 40, 40)
+
 [node name="Wa2MessageBox" type="Control"]
-custom_minimum_size = Vector2(1280, 208)
+custom_minimum_size = Vector2(1280, 228)
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_bottom = -512.0
+offset_bottom = -492.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_tv1cr")
 
 [node name="TextureRect2" type="TextureRect" parent="."]
-modulate = Color(1, 1, 1, 0.87451)
+modulate = Color(1, 1, 1, 0.627451)
 layout_mode = 1
-anchors_preset = 7
+anchors_preset = 5
 anchor_left = 0.5
-anchor_top = 1.0
 anchor_right = 0.5
-anchor_bottom = 1.0
 offset_left = -624.0
-offset_top = -208.0
 offset_right = 624.0
+offset_bottom = 208.0
 grow_horizontal = 2
-grow_vertical = 0
 texture = ExtResource("2_2btrp")
 stretch_mode = 2
 
 [node name="TextureRect" type="TextureRect" parent="."]
 layout_mode = 1
-anchors_preset = 7
+anchors_preset = 5
 anchor_left = 0.5
-anchor_top = 1.0
 anchor_right = 0.5
-anchor_bottom = 1.0
 offset_left = -624.0
-offset_top = -208.0
 offset_right = 624.0
+offset_bottom = 208.0
 grow_horizontal = 2
-grow_vertical = 0
 texture = ExtResource("3_wovaf")
 stretch_mode = 2
 
 [node name="NameLabel" type="Label" parent="."]
-custom_minimum_size = Vector2(800, 32)
-layout_mode = 0
-offset_left = 240.0
-offset_top = 16.0
-offset_right = 1040.0
-offset_bottom = 48.0
+custom_minimum_size = Vector2(800, 40)
+layout_mode = 1
+offset_left = 190.0
+offset_top = 15.0
+offset_right = 990.0
+offset_bottom = 47.0
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/line_spacing = 0
 theme_override_fonts/font = ExtResource("4_1akk2")
-theme_override_font_sizes/font_size = 28
+theme_override_font_sizes/font_size = 30
 
 [node name="TextLabel" type="Label" parent="."]
-custom_minimum_size = Vector2(800, 130)
-layout_mode = 0
-offset_left = 278.0
-offset_top = 58.0
-offset_right = 1078.0
-offset_bottom = 198.0
+custom_minimum_size = Vector2(900, 130)
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -400.0
+offset_top = 59.0
+offset_right = 500.0
+offset_bottom = 199.0
+grow_horizontal = 2
+scale = Vector2(1, 0.994)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/line_spacing = 10
 theme_override_fonts/font = ExtResource("4_1akk2")
-theme_override_font_sizes/font_size = 28
+theme_override_font_sizes/font_size = 30
 
 [node name="AwaitSprite" type="AnimatedSprite2D" parent="."]
 visible = false
@@ -926,12 +1016,129 @@ centered = false
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
 layout_mode = 1
-anchors_preset = 12
+anchors_preset = 3
+anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-grow_horizontal = 2
+offset_left = -337.0
+offset_top = -40.0
+offset_right = -57.0
+grow_horizontal = 0
 grow_vertical = 0
+theme_override_constants/separation = 0
 
 [node name="TextureButton" type="TextureButton" parent="HBoxContainer"]
+custom_minimum_size = Vector2(48, 48)
 layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+texture_normal = SubResource("AtlasTexture_hwecf")
+texture_pressed = SubResource("AtlasTexture_ac3q5")
+texture_hover = SubResource("AtlasTexture_vwqt2")
+texture_focused = SubResource("AtlasTexture_vwqt2")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="TextureButton2" type="TextureButton" parent="HBoxContainer"]
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+texture_normal = SubResource("AtlasTexture_3stkr")
+texture_pressed = SubResource("AtlasTexture_l0wy8")
+texture_hover = SubResource("AtlasTexture_0c7x8")
+texture_focused = SubResource("AtlasTexture_0c7x8")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="TextureButton3" type="TextureButton" parent="HBoxContainer"]
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+texture_normal = SubResource("AtlasTexture_603k7")
+texture_pressed = SubResource("AtlasTexture_yud4x")
+texture_hover = SubResource("AtlasTexture_ad4l1")
+texture_focused = SubResource("AtlasTexture_ad4l1")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="Back" type="TextureButton" parent="HBoxContainer"]
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+texture_normal = SubResource("AtlasTexture_l4wiw")
+texture_pressed = SubResource("AtlasTexture_cgq2e")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="Auto" type="TextureButton" parent="HBoxContainer"]
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+texture_normal = SubResource("AtlasTexture_8v50n")
+texture_pressed = SubResource("AtlasTexture_yvyqg")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="Skip" type="TextureButton" parent="HBoxContainer"]
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+texture_normal = SubResource("AtlasTexture_l8q8a")
+texture_pressed = SubResource("AtlasTexture_jhrve")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="Off" type="TextureButton" parent="HBoxContainer"]
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+texture_normal = SubResource("AtlasTexture_kdqnb")
+texture_pressed = SubResource("AtlasTexture_k375j")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="TextureRect3" type="TextureRect" parent="."]
+visible = false
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
+offset_left = 80.0
+offset_top = 188.0
+offset_right = 128.0
+offset_bottom = 236.0
+grow_vertical = 0
+texture = SubResource("AtlasTexture_1exfh")
+expand_mode = 1
+
+[node name="TextureRect4" type="TextureRect" parent="."]
+visible = false
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
+offset_left = 132.0
+offset_top = 188.0
+offset_right = 180.0
+offset_bottom = 236.0
+texture = SubResource("AtlasTexture_3vweg")
+expand_mode = 1
+
+[node name="TextureRect5" type="TextureRect" parent="."]
+visible = false
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
+offset_left = 184.0
+offset_top = 188.0
+offset_right = 232.0
+offset_bottom = 236.0
+texture = SubResource("AtlasTexture_adps2")
+expand_mode = 1
+
+[connection signal="button_down" from="HBoxContainer/Back" to="." method="_on_back_button_down"]
+[connection signal="button_down" from="HBoxContainer/Auto" to="." method="_on_auto_button_down"]
+[connection signal="button_down" from="HBoxContainer/Skip" to="." method="_on_skip_button_down"]
+[connection signal="button_down" from="HBoxContainer/Off" to="." method="_on_off_button_down"]

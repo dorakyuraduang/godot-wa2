@@ -4,6 +4,16 @@ enum ClickState{
 	NEW_PAGE,
 	CLICK_EOL
 }
+enum EventMode{
+	NULL=0,
+	WAIT_TIME=1,
+	WAIT_VOICE=2,
+	WAIT_CLICK=4,
+	WAIT_SE=8
+	
+}
+const MAX_BACK_INFO_COUNT:=100
+const VOICE_WAIT_FRAME=120
 const MAX_SE_CHANNELS=3
 const CHAR_IMAGE_PATH="res://assets/char/"
 const BG_IMAGE_PATH="res://assets/bak/"

@@ -51,7 +51,7 @@ func draw_image():
 		await get_tree().physics_frame
 		counter+=1
 		material.set_shader_parameter("time",float(counter)/duration)
-		if Globals.skip_flag:
+		if Globals.is_skip():
 			break
 	for i in char_info:
 		if char_info[i].new_image:

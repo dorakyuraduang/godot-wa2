@@ -7,3 +7,5 @@ assets/char
 assets/bak
 assets/bgm
 assets/fonts
+*.apk
+*.idsig
