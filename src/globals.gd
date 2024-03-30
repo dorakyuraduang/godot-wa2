@@ -11,9 +11,12 @@ var auto_wait_frame:=120
 var label:=0
 var bg_type:=0
 var cur_text=""
+var save_page=null
 var cur_voice=""
 var cur_name=""
 var text_state:=0
+var cur_bg=""
+var char_info={}
 var click_text_state:=0
 var text_on_flag:=0
 var lookbacks:Array=[]
@@ -30,3 +33,8 @@ func add_back_info():
 	
 func is_skip():
 	return ctrl_pressed or skip_flag
+func add_char(char,id,pos):
+	if !char_info.has(char):
+		char_info[char]={}
+	char_info[char].id=id
+	char_info[char].pos=pos

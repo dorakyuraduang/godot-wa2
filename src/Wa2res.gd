@@ -1,8 +1,8 @@
 extends Node
-func get_bg_image(id,type,no)->Texture2D:
-	return load("%sB%04d%01d%01d.tga"%[Consts.BG_IMAGE_PATH,id,no,type])
-func get_cg_image(id,no)->Texture2D:
-	return load("%sv%05d%01d.tga"%[Consts.CG_IMAGE_PATH,id,no])
+func get_bg_path(id,type,no)->String:
+	return "%sB%04d%01d%01d.tga"%[Consts.BG_IMAGE_PATH,id,no,type]
+func get_cg_path(id,no)->String:
+	return "%sv%05d%01d.tga"%[Consts.CG_IMAGE_PATH,id,no]
 func get_se_stream(id:int):
 	if ResourceLoader.exists("%sSE_%04d.WAV"%[Consts.SE_PATH,id]):
 		return load("%sSE_%04d.WAV"%[Consts.SE_PATH,id])
@@ -19,4 +19,5 @@ func get_bgm_stream( id:int,loop:=false):
 func get_voice_stream(file_name:String):
 	return load("%s%s"%[Consts.VOICE_PATH,file_name])
 func get_char_image(char:int,id:int):
-	return Image.load_from_file("%s%s%06d.tga"%[Consts.CHAR_IMAGE_PATH,Consts.CHAR_NAMES[char],id])
+	print("%s%s%06d.tga"%[Consts.CHAR_IMAGE_PATH,Consts.CHAR_NAMES[char],id])
+	return load("%s%s%06d.tga"%[Consts.CHAR_IMAGE_PATH,Consts.CHAR_NAMES[char],id]).get_image()

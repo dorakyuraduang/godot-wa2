@@ -9,7 +9,6 @@ var ws:Wa2Script=Wa2Script.new()
 @onready var bg:Sprite2D=$Wa2Bg
 @onready var message_box:Wa2MessageBox=$Wa2MessageBox
 @onready var effect:Wa2Effect=$Wa2Effect
-@onready var backlog=$Pages/BackLog
 var func_lut={
 	0xd2:move_command,
 	0x92:bg_command,
@@ -38,7 +37,8 @@ var func_lut={
 }
 func _ready():
 	Globals.message_box=message_box
-	Globals.backlog=backlog
+	Globals.backlog=$Pages/BackLog
+	Globals.save_page=$Pages/SavePage
 	load_script(6001)
 	while (true):
 		await get_tree().process_frame
@@ -99,30 +99,28 @@ func set_bg_type(type:int):
 	Globals.bg_type=type
 func bg_command(ef_id:int,id:int,no:int,frame:int,u1,u2,u3,u4,v5):
 	
-	var image=Wa2Res.get_bg_image(id,Globals.bg_type,no)
-	await change_bg(image,frame)
+	Globals.cur_bg=Wa2Res.get_bg_path(id,Globals.bg_type,no)
+	await change_bg(frame)
 	chars.clear()
 func bg2_command(ef_id:int,id:int,no:int,frame:int,v1,v2,v3,v4,v5,v6):
 	chars.duration=frame
 	chars.draw_image()
 	chars.z_index=1
 	var image=null
-	if id>=100000:
-		image=bg.texture
-	else:
-		image=Wa2Res.get_bg_image(id,Globals.bg_type,no)
+	if id<100000:
+		Globals.cur_bg=Wa2Res.get_bg_path(id,Globals.bg_type,no)
 		
-	await change_bg(image,frame)
+	await change_bg(frame)
 	chars.z_index=0
 	game_await=false
 func bg3_command(ef_id:int,id:int,no:int,frame:int,v1,offset,v2,scale_x,scale_y,v6,v7):
-	var image=Wa2Res.get_bg_image(id,Globals.bg_type,no)
-	await change_bg(image,frame,offset,Vector2(scale_x,scale_y))
+	Globals.cur_bg=Wa2Res.get_bg_path(id,Globals.bg_type,no)
+	await change_bg(frame,offset,Vector2(scale_x,scale_y))
 	chars.clear()
 func bg4_command(ef_id:int,id:int,no:int,frame:int,v1:int,v2:int,v3:int,v4:int,v5):
 	game_await=true
-	var image=Wa2Res.get_cg_image(id,no)
-	await change_bg(image,frame)
+	Globals.cur_bg=Wa2Res.get_cg_path(id,no)
+	await change_bg(frame)
 	chars.clear()
 	game_await=false
 func bg_type_command(type:int):
@@ -130,7 +128,8 @@ func bg_type_command(type:int):
 	return
 func se_command(channel:int,id:int,frame:int,loop:int,volume:int,v4:int):
 	Sound.play_se(channel,id,bool(loop),frame,volume)
-func change_bg(image:Texture2D,frame:int,offset:int=0,_scale:Vector2=Vector2.ONE):
+func change_bg(frame:int,offset:int=0,_scale:Vector2=Vector2.ONE):
+	var image=load(Globals.cur_bg)
 	Globals.move_flag=false
 	effect.image=image
 	effect.show()
@@ -173,17 +172,14 @@ func is_click(event):
 	else:
 		return false
 func text_command(text:String,idx:int,click_flag:int):
-	if !message_box.visible:
-		await message_box.on()
-	if Globals.cur_voice:
-		Sound.play_voice(Globals.cur_voice)
 	Globals.cur_text=text.replace("\\n","\n")
 	Globals.add_back_info()
 	message_box.update_text()
+	if !Globals.text_on_flag:
+		await message_box.on()
+	if Globals.cur_voice:
+		Sound.play_voice(Globals.cur_voice)
 	await message_box.wait_click
-	Globals.cur_text=""
-	Globals.cur_name=""
-	Globals.cur_voice=""
 func name_command(str):
 	if int(str)==1:
 		Globals.cur_name=""
@@ -192,6 +188,9 @@ func name_command(str):
 func click_command(v1:int):
 	Events.add_event(Consts.EventMode.WAIT_CLICK)
 	await Events.click_text
+	Globals.cur_text=""
+	Globals.cur_name=""
+	Globals.cur_voice=""
 #func parser_func():
 	#pass
 #func _physics_process(delta):
@@ -201,13 +200,11 @@ func click_command(v1:int):
 func textoff_command(v1:int,efc:int):
 	await message_box.off()
 func char_command(char:int,id:int,pos:int,v1:int,v2:int,frame:int,v3:int,v4:int):
-	var image=Wa2Res.get_char_image(char,id)
-	chars.set_char(char,pos,image)
+	Globals.add_char(char,id,pos)
 	chars.duration=frame
 	await chars.draw_image()
 func char2_command(char:int,id:int,pos:int,v1:int,v2:int,v3:int,v4:int):
-	var image=Wa2Res.get_char_image(char,id)
-	chars.set_char(char,pos,image)
+	Globals.add_char(char,id,pos)
 func move_command(offset:int,v1:int,frame:int,v2:int,v3:int):
 	bg_move(offset,frame)
 func bg_move(offset,frame):

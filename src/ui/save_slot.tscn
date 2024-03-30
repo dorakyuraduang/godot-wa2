@@ -1,0 +1,20 @@
+[gd_scene load_steps=5 format=3 uid="uid://vhl58c04l614"]
+
+[ext_resource type="Texture2D" uid="uid://wm4sdsd3yv1x" path="res://assets/grp/sys_01010.tga" id="1_ttuqr"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_2ldw7"]
+load_path = "res://.godot/imported/sys_01010.tga-e2f4970bc117231112a8a89d7dcd0233.ctex"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_iqefy"]
+atlas = SubResource("CompressedTexture2D_2ldw7")
+region = Rect2(632, 0, 632, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_v6j55"]
+atlas = ExtResource("1_ttuqr")
+region = Rect2(0, 0, 632, 96)
+
+[node name="SaveSlot" type="TextureButton"]
+offset_right = 632.0
+offset_bottom = 96.0
+texture_normal = SubResource("AtlasTexture_iqefy")
+texture_disabled = SubResource("AtlasTexture_v6j55")

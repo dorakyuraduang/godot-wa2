@@ -8,12 +8,12 @@ signal wait_click
 @onready var auto_sprite=$TextureRect4
 @onready var skip_sprite=$TextureRect5
 func update_text():
-	Globals.text_state=1
 	var wait_position=get_text_position(Globals.cur_text) 
 	wait_sprite.frame=0
 	text_label.text=Globals.cur_text
 	name_label.text=Globals.cur_name
 	wait_sprite.position=text_label.position+wait_position*Vector2(30,40)
+	Globals.text_state=1
 	text_label.visible_ratio=0.0
 func get_text_position(text:String):
 	var y:=0
@@ -101,3 +101,7 @@ func _on_auto_button_down():
 func _on_back_button_down():
 	Globals.backlog.open()
 	off(0)
+
+
+func _on_save_button_down():
+	Globals.save_page.open()

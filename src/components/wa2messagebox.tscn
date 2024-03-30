@@ -1028,7 +1028,7 @@ grow_horizontal = 0
 grow_vertical = 0
 theme_override_constants/separation = 0
 
-[node name="TextureButton" type="TextureButton" parent="HBoxContainer"]
+[node name="Save" type="TextureButton" parent="HBoxContainer"]
 custom_minimum_size = Vector2(48, 48)
 layout_mode = 2
 size_flags_horizontal = 0
@@ -1138,6 +1138,7 @@ offset_bottom = 236.0
 texture = SubResource("AtlasTexture_adps2")
 expand_mode = 1
 
+[connection signal="button_down" from="HBoxContainer/Save" to="." method="_on_save_button_down"]
 [connection signal="button_down" from="HBoxContainer/Back" to="." method="_on_back_button_down"]
 [connection signal="button_down" from="HBoxContainer/Auto" to="." method="_on_auto_button_down"]
 [connection signal="button_down" from="HBoxContainer/Skip" to="." method="_on_skip_button_down"]
