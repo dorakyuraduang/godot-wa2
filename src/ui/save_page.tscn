@@ -1,7 +1,8 @@
-[gd_scene load_steps=11 format=3 uid="uid://bxa3gtl880ece"]
+[gd_scene load_steps=12 format=3 uid="uid://bxa3gtl880ece"]
 
 [ext_resource type="Texture2D" uid="uid://fotv4lu63j1j" path="res://assets/grp/sys_01000.tga" id="1_eobji"]
 [ext_resource type="Texture2D" uid="uid://baqclfhgruuhy" path="res://assets/grp/sys_05012.tga" id="1_fpsiy"]
+[ext_resource type="Script" path="res://src/ui/save_page.gd" id="1_s3xba"]
 [ext_resource type="Texture2D" uid="uid://r25dhney8o20" path="res://assets/grp/sys_09000.tga" id="3_6yasr"]
 [ext_resource type="Texture2D" uid="uid://bkt72x50htjvp" path="res://assets/grp/sys_09100.tga" id="4_8mjx4"]
 [ext_resource type="PackedScene" uid="uid://vhl58c04l614" path="res://src/ui/save_slot.tscn" id="5_qik6m"]
@@ -83,6 +84,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 pivot_offset = Vector2(640, 360)
+script = ExtResource("1_s3xba")
 
 [node name="ColorRect" type="ColorRect" parent="."]
 layout_mode = 1
@@ -186,3 +188,5 @@ layout_mode = 2
 
 [node name="SaveSlot10" parent="GridContainer" instance=ExtResource("5_qik6m")]
 layout_mode = 2
+
+[connection signal="button_down" from="TextureButton" to="." method="_on_texture_button_button_down"]

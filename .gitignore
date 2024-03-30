@@ -9,3 +9,4 @@ assets/bgm
 assets/fonts
 *.apk
 *.idsig
+.VSCodeCounter/

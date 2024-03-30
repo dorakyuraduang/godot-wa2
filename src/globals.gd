@@ -38,3 +38,12 @@ func add_char(char,id,pos):
 		char_info[char]={}
 	char_info[char].id=id
 	char_info[char].pos=pos
+func save_file():
+	var file_data={
+		"text":Globals.cur_text,
+		"name":Globals.cur_name,
+		"voice":Globals.cur_voice,
+		"bg":Globals.cur_bg,
+		"char_info":Globals.char_info
+	}
+	

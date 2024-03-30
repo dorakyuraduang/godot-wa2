@@ -48,6 +48,16 @@ func _physics_process(delta):
 		Globals.ctrl_pressed=true
 	else:
 		Globals.ctrl_pressed=false
+	if Input.is_action_pressed("f12"):
+		screenshot()
+func screenshot():
+	var image=Image.create(1280,720,false,Image.FORMAT_RGBA8)
+	var bg_image:Image=bg.texture.get_image()
+	var char_image=chars.cur_image
+	bg_image.convert(Image.FORMAT_RGBA8)
+	image.blend_rect(bg_image,Rect2i(Vector2i.ZERO,bg_image.get_size()),Vector2i.ZERO)
+	image.blend_rect(char_image,Rect2i(Vector2i.ZERO,char_image.get_size()),Vector2i.ZERO)
+	image.save_png("res://test.png")
 	#set_bg_type(0)
 	#change_bg(1005,1,60)
 	#await get_tree().create_timer(2.0).timeout

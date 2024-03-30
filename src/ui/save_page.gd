@@ -3,3 +3,7 @@ extends Control
 func open():
 	show()
 	animation_player.play("open")
+
+
+func _on_texture_button_button_down():
+	hide()
