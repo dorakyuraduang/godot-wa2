@@ -1,18 +1,18 @@
 [gd_scene load_steps=5 format=3 uid="uid://bx1jvhk4mbxo"]
 
-[ext_resource type="Script" path="res://src/back_message.gd" id="1_i321n"]
-[ext_resource type="Texture2D" uid="uid://d3cwt5hi2rk06" path="res://assets/grp/sys_00031.tga" id="2_hr0oi"]
-[ext_resource type="FontFile" uid="uid://8lmuk1m2rsdk" path="res://assets/fonts/simhei.ttf" id="3_ncojs"]
+[ext_resource type="Script" path="res://src/ui/back_message.gd" id="1_ci2pd"]
+[ext_resource type="Texture2D" uid="uid://d3cwt5hi2rk06" path="res://assets/grp/sys_00031.tga" id="2_y4nw4"]
+[ext_resource type="FontFile" uid="uid://8lmuk1m2rsdk" path="res://assets/fonts/simhei.ttf" id="3_vltw3"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_q66bj"]
-atlas = ExtResource("2_hr0oi")
+atlas = ExtResource("2_y4nw4")
 region = Rect2(0, 28, 28, 28)
 
 [node name="BackMessage" type="VBoxContainer"]
 offset_right = 840.0
 offset_bottom = 160.0
 theme_override_constants/separation = 0
-script = ExtResource("1_i321n")
+script = ExtResource("1_ci2pd")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
 custom_minimum_size = Vector2(0, 40)
@@ -32,14 +32,14 @@ texture_normal = SubResource("AtlasTexture_q66bj")
 [node name="Label" type="Label" parent="HBoxContainer"]
 layout_mode = 2
 theme_override_constants/line_spacing = 10
-theme_override_fonts/font = ExtResource("3_ncojs")
+theme_override_fonts/font = ExtResource("3_vltw3")
 theme_override_font_sizes/font_size = 30
 
 [node name="Label" type="Label" parent="."]
 custom_minimum_size = Vector2(0, 120)
 layout_mode = 2
 theme_override_constants/line_spacing = 10
-theme_override_fonts/font = ExtResource("3_ncojs")
+theme_override_fonts/font = ExtResource("3_vltw3")
 theme_override_font_sizes/font_size = 30
 
 [connection signal="button_down" from="HBoxContainer/MarginContainer/TextureButton" to="." method="_on_texture_button_button_down"]

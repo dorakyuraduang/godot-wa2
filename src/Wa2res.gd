@@ -19,5 +19,4 @@ func get_bgm_stream( id:int,loop:=false):
 func get_voice_stream(file_name:String):
 	return load("%s%s"%[Consts.VOICE_PATH,file_name])
 func get_char_image(char:int,id:int):
-	print("%s%s%06d.tga"%[Consts.CHAR_IMAGE_PATH,Consts.CHAR_NAMES[char],id])
 	return load("%s%s%06d.tga"%[Consts.CHAR_IMAGE_PATH,Consts.CHAR_NAMES[char],id]).get_image()

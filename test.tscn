@@ -1,22 +1,13 @@
-[gd_scene load_steps=7 format=3 uid="uid://dmh8ncf7f1j8x"]
+[gd_scene load_steps=5 format=3 uid="uid://dmh8ncf7f1j8x"]
 
 [ext_resource type="Script" path="res://test.gd" id="1_o2pos"]
 [ext_resource type="Shader" path="res://src/shader/gray.gdshader" id="2_nqhcs"]
 [ext_resource type="Texture2D" uid="uid://brwqdtvebvhw2" path="res://assets/bak/B103302.tga" id="3_nk5nf"]
 
-[sub_resource type="Gradient" id="Gradient_40wt1"]
-offsets = PackedFloat32Array(0, 0.5, 1)
-colors = PackedColorArray(1, 1, 1, 1, 1.45, 1.14, 0.65, 1, 1, 1, 1, 1)
-
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_dbm8o"]
-gradient = SubResource("Gradient_40wt1")
-use_hdr = true
-
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_e0g0i"]
 shader = ExtResource("2_nqhcs")
-shader_parameter/activation = true
+shader_parameter/activation = false
 shader_parameter/amount = 0.0
-shader_parameter/amp = SubResource("GradientTexture1D_dbm8o")
 
 [node name="test" type="Node2D"]
 script = ExtResource("1_o2pos")

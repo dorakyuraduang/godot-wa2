@@ -17,5 +17,5 @@ func _draw():
 	match effect_type:
 		0:
 			var alpha=float(counter)/duration
-			var pos=(image.get_size()*((Vector2.ONE-scale)/2)/scale)+offset
+			var pos=(image.get_size()*((Vector2.ONE-scale)/2)/scale)+offset/scale
 			draw_texture(image,pos,Color(1,1,1,alpha))
