@@ -93,6 +93,8 @@ func parse_command():
 					0x10:
 						var a=args.pop_back()
 						args[args.size()-1]+=a
+					0x17:
+						args[args.size()-1]*=-1
 			3:
 				args.append(ws.str_args[ws.read_int()])
 			5:
@@ -135,9 +137,9 @@ func bg2_command(ef_id:int,id:int,no:int,frame:int,v1,v2,v3,v4,v5,v6):
 		Globals.cur_bg=Wa2Res.get_bg_path(id,Globals.bg_type,no)
 		await change_bg(frame)
 	viewport.set_chars_priority(false)
-func bg3_command(ef_id:int,id:int,no:int,frame:int,v1,offset,v2,scale_x,scale_y,v6,v7):
+func bg3_command(ef_id:int,id:int,no:int,frame:int,v1:int,offset_x:int,offset_y:int,scale_x,scale_y,v6,v7):
 	Globals.cur_bg=Wa2Res.get_bg_path(id,Globals.bg_type,no)
-	await change_bg(frame,offset,Vector2(scale_x,scale_y))
+	await change_bg(frame,Vector2(offset_x-v1,offset_y),Vector2(scale_x,scale_y))
 	viewport.clear()
 func bg4_command(ef_id:int,id:int,no:int,frame:int,v1:int,v2:int,v3:int,v4:int,v5):
 	Globals.cur_bg=Wa2Res.get_cg_path(id,no)
@@ -148,7 +150,7 @@ func bg_type_command(type:int):
 	return
 func se_command(channel:int,id:int,frame:int,loop:int,volume:int,v4:int):
 	Sound.play_se(channel,id,bool(loop),frame,volume)
-func change_bg(frame:int,offset:int=0,_scale:Vector2=Vector2.ONE):
+func change_bg(frame:int,offset:Vector2=Vector2.ZERO,_scale:Vector2=Vector2.ONE):
 	var image=load(Globals.cur_bg)
 	Globals.move_flag=false
 	viewport.set_bg2_image(image)
@@ -203,7 +205,7 @@ func text_command(text:String,idx:int,click_flag:int):
 		Sound.play_voice(Globals.cur_voice)
 	await message_box.wait_click
 func name_command(str):
-	if int(str)==1:
+	if int(str)==-1:
 		Globals.cur_name=""
 	else:
 		Globals.cur_name=str
@@ -227,18 +229,20 @@ func char_command(char:int,id:int,pos:int,v1:int,v2:int,frame:int,v3:int,v4:int)
 	await viewport.draw_image()
 func char2_command(char:int,id:int,pos:int,v1:int,v2:int,v3:int,v4:int):
 	Globals.add_char(char,id,pos)
-func move_command(offset:int,v1:int,frame:int,v2:int,v3:int):
-	bg_move(offset,frame)
-func bg_move(offset,frame):
+func move_command(offset_x:int,offset_y:int,frame:int,v2:int,v3:int):
+	bg_move(Vector2(offset_x,offset_y),frame)
+func bg_move(offset:Vector2,frame):
 	var counter=0
 	Globals.move_flag=true
 	var start_offset=viewport.get_bg1_offset()
-	var distance=offset
+	var distance=start_offset-offset
+	print(start_offset)
+	print(offset)
+	print("距离",distance)
 	while (counter<frame):
 		await get_tree().physics_frame
-		print("移动中",start_offset+distance*(float(counter)/frame))
 		counter+=1
-		viewport.set_bg1_offset(start_offset+distance*(float(counter)/frame))
+		viewport.set_bg1_offset(start_offset-distance*(float(counter)/frame))
 		if !Globals.move_flag:
 			break
 func go_command(id:String,v1:int):

@@ -5,17 +5,17 @@ uniform sampler2D bg2_texture;
 uniform sampler2D bg1_texture;
 uniform bool chars_priority=false;
 uniform vec2 bg1_scale=vec2(1.0,1.0);
-uniform float bg1_offset=0;
+uniform vec2 bg1_offset=vec2(0.0,0.0);
 uniform vec2 bg2_scale=vec2(1.0,1.0);
-uniform float bg2_offset=0;
+uniform vec2 bg2_offset=vec2(0.0);
 uniform sampler2D amp;
 uniform int amp_mode=2;
 uniform float strength=0.0;
 uniform float bg2_alpha:hint_range(0.0, 1.0, 0.0001);
 uniform float time:hint_range(0.0, 1.0, 0.0001);
-vec4 get_bg_color(sampler2D bg_texture,vec2 uv,float offset,vec2 scale){
+vec4 get_bg_color(sampler2D bg_texture,vec2 uv,vec2 offset,vec2 scale){
 	vec2 scaled_uv = uv /scale;
-    vec2 bg_offset = ((vec2(1.0)-scale)/2.0/scale)+vec2(float(offset)/1280.0,0)/scale;
+    vec2 bg_offset = ((vec2(1.0)-scale)/2.0/scale)-(offset/vec2(1280,720));
     vec2 centered_uv = scaled_uv - bg_offset;
 	vec4 bg_color=texture(bg_texture,centered_uv);
 	if(textureSize(bg_texture,0)==ivec2(4,4)){	

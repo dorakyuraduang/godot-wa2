@@ -45,13 +45,13 @@ func draw_image():
 	texture_viewport.material.set_shader_parameter("time",1.0)	
 func set_bg1_image(image:Texture):
 	texture_viewport.material.set_shader_parameter("bg1_texture",image)
-func set_bg1_offset(offset:float):
+func set_bg1_offset(offset:Vector2):
 	texture_viewport.material.set_shader_parameter("bg1_offset",offset)
 func set_bg1_scale(scale:Vector2):
 	texture_viewport.material.set_shader_parameter("bg1_scale",scale)
 func set_bg2_image(image:Texture):
 	texture_viewport.material.set_shader_parameter("bg2_texture",image)
-func set_bg2_offset(offset:float):
+func set_bg2_offset(offset:Vector2):
 	texture_viewport.material.set_shader_parameter("bg2_offset",offset)
 func set_bg2_scale(scale:Vector2):
 	texture_viewport.material.set_shader_parameter("bg2_scale",scale)

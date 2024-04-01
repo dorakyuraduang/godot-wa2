@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://test.gd" id="1_o2pos"]
 [ext_resource type="Shader" path="res://src/shader/gray.gdshader" id="2_nqhcs"]
-[ext_resource type="Texture2D" uid="uid://brwqdtvebvhw2" path="res://assets/bak/B103302.tga" id="3_nk5nf"]
+[ext_resource type="Texture2D" uid="uid://c7mg2uqjnoy7c" path="res://assets/bak/B105300.tga" id="3_1acdl"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_e0g0i"]
 shader = ExtResource("2_nqhcs")
@@ -15,4 +15,5 @@ script = ExtResource("1_o2pos")
 [node name="Wa2Bg" type="Sprite2D" parent="."]
 material = SubResource("ShaderMaterial_e0g0i")
 position = Vector2(640, 360)
-texture = ExtResource("3_nk5nf")
+scale = Vector2(1.5, 1.5)
+texture = ExtResource("3_1acdl")

@@ -11,6 +11,7 @@ func update_text():
 	var wait_position=get_text_position(Globals.cur_text) 
 	wait_sprite.frame=0
 	text_label.text=Globals.cur_text
+	print(Globals.cur_name)
 	name_label.text=Globals.cur_name
 	wait_sprite.position=text_label.position+wait_position*Vector2(30,40)
 	Globals.text_state=1
