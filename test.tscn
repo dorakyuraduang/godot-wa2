@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://test.gd" id="1_o2pos"]
 [ext_resource type="Shader" path="res://src/shader/gray.gdshader" id="2_nqhcs"]
-[ext_resource type="Texture2D" uid="uid://c7mg2uqjnoy7c" path="res://assets/bak/B105300.tga" id="3_1acdl"]
+[ext_resource type="Texture2D" uid="uid://cikgrvo32lvxi" path="res://assets/char/kaz002101.tga" id="3_mmg7o"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_e0g0i"]
 shader = ExtResource("2_nqhcs")
@@ -16,4 +16,4 @@ script = ExtResource("1_o2pos")
 material = SubResource("ShaderMaterial_e0g0i")
 position = Vector2(640, 360)
 scale = Vector2(1.5, 1.5)
-texture = ExtResource("3_1acdl")
+texture = ExtResource("3_mmg7o")

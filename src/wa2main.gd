@@ -7,7 +7,7 @@ var label:=0
 var ws:Wa2Script=Wa2Script.new()
 #@onready var chars:Wa2Chars=$Wa2Chars
 #@onready var bg:Sprite2D=$Wa2Bg
-@onready var viewport=$Wa2Viewport
+@onready var viewport:SubViewportContainer=$Wa2Viewport
 @onready var message_box:Wa2MessageBox=$Wa2MessageBox
 var func_lut={
 	0xd2:move_command,
@@ -38,7 +38,7 @@ var func_lut={
 	0xac:amp_command
 }
 func amp_setting_command(strength:int,mode:int):
-	viewport.set_amp_strength(strength/255.0);
+	viewport.set_shader_var("amp_strength",strength/255.0)
 	viewport.set_amp_mode(mode)
 func amp_command(path,v1:int):
 	if path=="sepia.AMP":
@@ -51,12 +51,13 @@ func amp_command(path,v1:int):
 		#print("设置false")
 		#bg.material.set_shader_parameter("activation",false)
 func _ready():
+	Globals.viewport=viewport
 	Globals.message_box=message_box
 	Globals.backlog=$Pages/BackLog
 	Globals.save_page=$Pages/SavePage
-	load_script(6004)
+	load_script(6001)
 	while (true):
-		await get_tree().process_frame
+		await get_tree().physics_frame
 		await  parse_command()
 func _physics_process(delta):
 	if Input.is_action_pressed("skip"):
@@ -67,17 +68,8 @@ func _physics_process(delta):
 		screenshot()
 func screenshot():
 	pass
-	#var image=Image.create(1280,720,false,Image.FORMAT_RGBA8)
-	#var bg_image:Image=viewport.bg_texture.get_image()
-	#var char_image=viewport.cur_image
-	#bg_image.convert(Image.FORMAT_RGBA8)
-	#image.blend_rect(bg_image,Rect2i(Vector2i.ZERO,bg_image.get_size()),Vector2i.ZERO)
-	#image.blend_rect(char_image,Rect2i(Vector2i.ZERO,char_image.get_size()),Vector2i.ZERO)
+	#var image:Image=viewport.get_image()
 	#image.save_png("res://test.png")
-	#set_bg_type(0)
-	#change_bg(1005,1,60)
-	#await get_tree().create_timer(2.0).timeout
-	#change_bg(1005,2,60)
 func load_script(id:int):
 	ws.load(id)
 func parse_command():
@@ -127,38 +119,40 @@ func set_bg_type(type:int):
 	Globals.bg_type=type
 func bg_command(ef_id:int,id:int,no:int,frame:int,u1,u2,u3,u4,v5):
 	Globals.cur_bg=Wa2Res.get_bg_path(id,Globals.bg_type,no)
-	await change_bg(frame)
+	Globals.bg_draw_frame=frame
+	await change_bg()
 	viewport.clear()
 func bg2_command(ef_id:int,id:int,no:int,frame:int,v1,v2,v3,v4,v5,v6):
-	viewport.duration=15
-	viewport.draw_image()
 	viewport.set_chars_priority(true)
+	viewport.draw_image()
 	if id<100000:
 		Globals.cur_bg=Wa2Res.get_bg_path(id,Globals.bg_type,no)
-		await change_bg(frame)
+		await change_bg()
 	viewport.set_chars_priority(false)
 func bg3_command(ef_id:int,id:int,no:int,frame:int,v1:int,offset_x:int,offset_y:int,scale_x,scale_y,v6,v7):
 	Globals.cur_bg=Wa2Res.get_bg_path(id,Globals.bg_type,no)
-	await change_bg(frame,Vector2(offset_x-v1,offset_y),Vector2(scale_x,scale_y))
+	Globals.bg_draw_frame=frame
+	await change_bg(Vector2(offset_x-v1,offset_y),Vector2(scale_x,scale_y))
 	viewport.clear()
 func bg4_command(ef_id:int,id:int,no:int,frame:int,v1:int,v2:int,v3:int,v4:int,v5):
 	Globals.cur_bg=Wa2Res.get_cg_path(id,no)
-	await change_bg(frame)
+	Globals.bg_draw_frame=frame
+	await change_bg()
 	viewport.clear()
 func bg_type_command(type:int):
 	set_bg_type(type)
 	return
 func se_command(channel:int,id:int,frame:int,loop:int,volume:int,v4:int):
 	Sound.play_se(channel,id,bool(loop),frame,volume)
-func change_bg(frame:int,offset:Vector2=Vector2.ZERO,_scale:Vector2=Vector2.ONE):
+func change_bg(offset:Vector2=Vector2.ZERO,_scale:Vector2=Vector2.ONE):
 	var image=load(Globals.cur_bg)
-	Globals.move_flag=false
 	viewport.set_bg2_image(image)
 	viewport.set_bg2_offset(offset)
 	viewport.set_bg2_scale(_scale)
-	for i in frame:
-		await get_tree().physics_frame
-		viewport.set_bg2_alpha(i/float(frame))
+	Globals.move_flag=false
+	for i in Globals.bg_draw_frame:
+		await get_tree().process_frame
+		viewport.set_bg2_alpha(i/float(Globals.bg_draw_frame))
 		if Globals.is_skip():
 			break
 	viewport.set_bg2_alpha(0.0)
@@ -229,6 +223,7 @@ func char_command(char:int,id:int,pos:int,v1:int,v2:int,frame:int,v3:int,v4:int)
 	await viewport.draw_image()
 func char2_command(char:int,id:int,pos:int,v1:int,v2:int,v3:int,v4:int):
 	Globals.add_char(char,id,pos)
+	Globals.bg_draw_frame=v3
 func move_command(offset_x:int,offset_y:int,frame:int,v2:int,v3:int):
 	bg_move(Vector2(offset_x,offset_y),frame)
 func bg_move(offset:Vector2,frame):
@@ -236,15 +231,12 @@ func bg_move(offset:Vector2,frame):
 	Globals.move_flag=true
 	var start_offset=viewport.get_bg1_offset()
 	var distance=start_offset-offset
-	print(start_offset)
-	print(offset)
-	print("距离",distance)
 	while (counter<frame):
 		await get_tree().physics_frame
-		counter+=1
-		viewport.set_bg1_offset(start_offset-distance*(float(counter)/frame))
 		if !Globals.move_flag:
 			break
+		counter+=1
+		viewport.set_bg1_offset(start_offset-distance*(float(counter)/frame))
 func go_command(id:String,v1:int):
 	load_script(int(id))
 func sewait_command(c:int):

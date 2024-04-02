@@ -1,6 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://vhl58c04l614"]
+[gd_scene load_steps=7 format=3 uid="uid://vhl58c04l614"]
 
 [ext_resource type="Texture2D" uid="uid://wm4sdsd3yv1x" path="res://assets/grp/sys_01010.tga" id="1_ttuqr"]
+[ext_resource type="Script" path="res://src/ui/save_slot.gd" id="2_55bub"]
+[ext_resource type="Script" path="res://src/ui/wa2number.gd" id="2_ttukg"]
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_2ldw7"]
 load_path = "res://.godot/imported/sys_01010.tga-e2f4970bc117231112a8a89d7dcd0233.ctex"
@@ -18,3 +20,21 @@ offset_right = 632.0
 offset_bottom = 96.0
 texture_normal = SubResource("AtlasTexture_iqefy")
 texture_disabled = SubResource("AtlasTexture_v6j55")
+script = ExtResource("2_55bub")
+
+[node name="No" type="Node2D" parent="."]
+position = Vector2(12, 24)
+script = ExtResource("2_ttukg")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+custom_minimum_size = Vector2(128, 72)
+layout_mode = 0
+offset_left = 54.0
+offset_top = 10.0
+offset_right = 182.0
+offset_bottom = 82.0
+expand_mode = 1
+
+[node name="Date" type="Node2D" parent="."]
+position = Vector2(188, 24)
+script = ExtResource("2_ttukg")

@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://bwuxyncqw1hwj"]
+
+[ext_resource type="Script" path="res://src/ui/wa2number.gd" id="1_sbqu2"]
+
+[node name="Wa2Number" type="Node2D"]
+script = ExtResource("1_sbqu2")

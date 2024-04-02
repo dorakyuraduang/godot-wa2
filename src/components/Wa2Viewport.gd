@@ -1,4 +1,5 @@
 extends SubViewportContainer
+@onready var sub_viewport=$SubViewport
 @onready var texture_viewport=$SubViewport/ColorRect
 var char_info={}
 var bg_texture:Texture
@@ -65,3 +66,9 @@ func get_bg1_offset():
 	return texture_viewport.material.get_shader_parameter("bg1_offset")
 func set_chars_priority(flag:bool):
 	texture_viewport.material.set_shader_parameter("chars_priority",flag)
+func get_image():
+	return sub_viewport.get_texture().get_image()
+func get_shader_var(prop:String):
+	return texture_viewport.material.get_shader_parameter(prop)
+func set_shader_var(prop:String,value):
+	texture_viewport.material.set_shader_parameter(prop,value)	

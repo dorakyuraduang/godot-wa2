@@ -10,7 +10,7 @@ uniform vec2 bg2_scale=vec2(1.0,1.0);
 uniform vec2 bg2_offset=vec2(0.0);
 uniform sampler2D amp;
 uniform int amp_mode=2;
-uniform float strength=0.0;
+uniform float amp_strength=0.0;
 uniform float bg2_alpha:hint_range(0.0, 1.0, 0.0001);
 uniform float time:hint_range(0.0, 1.0, 0.0001);
 vec4 get_bg_color(sampler2D bg_texture,vec2 uv,vec2 offset,vec2 scale){
@@ -55,16 +55,16 @@ void fragment() {
 	if (amp_mode==0){
 		float gray=(chars_color.r+chars_color.g+chars_color.b)/3.0;
 		vec4 colora=texture(amp,vec2(gray,gray));
-		chars_color=mix(vec4(gray,gray,gray,chars_color.a)* colora,chars_color*colora,strength);
+		chars_color=mix(vec4(gray,gray,gray,chars_color.a)* colora,chars_color*colora,amp_strength);
 		
 	}
 	if (amp_mode>=0 && amp_mode<2){
 		float gray=(bg1_color.r+bg1_color.g+bg1_color.b)/3.0;
 		vec4 colora=texture(amp,vec2(gray,gray));
-		bg1_color=mix(vec4(gray,gray,gray,1.0)* colora,bg1_color*colora,strength);
+		bg1_color=mix(vec4(gray,gray,gray,1.0)* colora,bg1_color*colora,amp_strength);
 		float gray2=(bg2_color.r+bg2_color.g+bg2_color.b)/3.0;
 		vec4 colora2=texture(amp,vec2(gray2,gray2));
-		bg2_color=mix(vec4(gray2,gray2,gray2,1.0)* colora2,bg2_color*colora2,strength);
+		bg2_color=mix(vec4(gray2,gray2,gray2,1.0)* colora2,bg2_color*colora2,amp_strength);
 	}
 	if (chars_priority){
 		vec4 final_color=mix(bg2_color,chars_color,chars_color.a);
