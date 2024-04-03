@@ -14,9 +14,10 @@ uniform float amp_strength=0.0;
 uniform float bg2_alpha:hint_range(0.0, 1.0, 0.0001);
 uniform float time:hint_range(0.0, 1.0, 0.0001);
 vec4 get_bg_color(sampler2D bg_texture,vec2 uv,vec2 offset,vec2 scale){
-	vec2 scaled_uv = uv /scale;
+	vec2 size=vec2(textureSize(bg_texture,0))/vec2(1280,720);
+	vec2 scaled_uv = (uv /scale);
     vec2 bg_offset = ((vec2(1.0)-scale)/2.0/scale)-(offset/vec2(1280,720));
-    vec2 centered_uv = scaled_uv - bg_offset;
+    vec2 centered_uv = (scaled_uv - bg_offset)/size;
 	vec4 bg_color=texture(bg_texture,centered_uv);
 	if(textureSize(bg_texture,0)==ivec2(4,4)){	
 		bg_color=vec4(0);

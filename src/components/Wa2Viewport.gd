@@ -1,6 +1,7 @@
 extends SubViewportContainer
 @onready var sub_viewport=$SubViewport
 @onready var texture_viewport=$SubViewport/ColorRect
+var bg_draw_frame:=0
 var char_info={}
 var bg_texture:Texture
 var bg_image=Image.create(1280,720,false,Image.FORMAT_RGB8)
@@ -78,13 +79,24 @@ func change_bg(offset:Vector2=Vector2.ZERO,_scale:Vector2=Vector2.ONE):
 	set_bg2_offset(offset)
 	set_bg2_scale(_scale)
 	Globals.move_flag=false
-	if Globals.bg_draw_frame>0:
-		for i in Globals.bg_draw_frame:
+	if bg_draw_frame>0:
+		for i in bg_draw_frame:
 			await get_tree().process_frame
-			set_bg2_alpha(i/float(Globals.bg_draw_frame))
+			set_bg2_alpha(i/float(bg_draw_frame))
 			if Globals.is_skip():
 				break
 	set_bg2_alpha(0.0)
 	set_bg1_image(image)
 	set_bg1_scale(_scale)
 	set_bg1_offset(offset)
+func bg_move(offset,frame):
+	var counter=0
+	Globals.move_flag=true
+	var start_offset=get_bg1_offset()
+	var distance=start_offset-offset
+	while (counter<frame):
+		await get_tree().physics_frame
+		if !Globals.move_flag:
+			break
+		counter+=1
+		set_bg1_offset(start_offset-distance*(float(counter)/frame))

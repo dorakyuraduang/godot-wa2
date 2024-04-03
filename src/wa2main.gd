@@ -55,8 +55,11 @@ func _ready():
 	Globals.backlog=$Pages/BackLog
 	Globals.save_page=$Pages/SavePage
 	Globals.load_page=$Pages/LoadPage
-	Ws.load(6001)
-	while (true):
+	Globals.title_menu_page=$Pages/TitleMenu
+	Globals.title_menu_page.open()
+	#Ws.load(6001)
+	
+	while (game_state==1):
 		await get_tree().physics_frame
 		await  Ws.parse_command()
 func _physics_process(delta):
@@ -91,7 +94,7 @@ func set_bg_type(type:int):
 	Globals.bg_type=type
 func bg_command(ef_id:int,id:int,no:int,frame:int,u1,u2,u3,u4,v5):
 	Globals.cur_bg=Wa2Res.get_bg_path(id,Globals.bg_type,no)
-	Globals.bg_draw_frame=frame
+	viewport.bg_draw_frame=frame
 	await viewport.change_bg()
 	viewport.clear()
 func bg2_command(ef_id:int,id:int,no:int,frame:int,v1,v2,v3,v4,v5,v6):
@@ -103,12 +106,12 @@ func bg2_command(ef_id:int,id:int,no:int,frame:int,v1,v2,v3,v4,v5,v6):
 	viewport.set_chars_priority(false)
 func bg3_command(ef_id:int,id:int,no:int,frame:int,v1:int,offset_x:int,offset_y:int,scale_x,scale_y,v6,v7):
 	Globals.cur_bg=Wa2Res.get_bg_path(id,Globals.bg_type,no)
-	Globals.bg_draw_frame=frame
+	viewport.bg_draw_frame=frame
 	await viewport.change_bg(Vector2(offset_x-v1,offset_y),Vector2(scale_x,scale_y))
 	viewport.clear()
 func bg4_command(ef_id:int,id:int,no:int,frame:int,v1:int,v2:int,v3:int,v4:int,v5):
 	Globals.cur_bg=Wa2Res.get_cg_path(id,no)
-	Globals.bg_draw_frame=frame
+	viewport.bg_draw_frame=frame
 	await viewport.change_bg()
 	viewport.clear()
 func bg_type_command(type:int):
@@ -181,20 +184,11 @@ func char_command(char:int,id:int,pos:int,v1:int,v2:int,frame:int,v3:int,v4:int)
 func char2_command(char:int,id:int,pos:int,v1:int,v2:int,v3:int,v4:int):
 	Globals.add_char(char,id,pos)
 	viewport.duration=v3
-	Globals.bg_draw_frame=v3
+	viewport.bg_draw_frame=v3
 func move_command(offset_x:int,offset_y:int,frame:int,v2:int,v3:int):
 	bg_move(Vector2(offset_x,offset_y),frame)
 func bg_move(offset:Vector2,frame):
-	var counter=0
-	Globals.move_flag=true
-	var start_offset=viewport.get_bg1_offset()
-	var distance=start_offset-offset
-	while (counter<frame):
-		await get_tree().physics_frame
-		if !Globals.move_flag:
-			break
-		counter+=1
-		viewport.set_bg1_offset(start_offset-distance*(float(counter)/frame))
+	await viewport.bg_move(offset,frame)
 func go_command(id:String,v1:int):
 	load_script(int(id))
 func sewait_command(c:int):

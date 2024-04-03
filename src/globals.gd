@@ -24,11 +24,13 @@ var message_box=null
 var backlog=null
 var bg_draw_frame:=0
 var viewport=null
-var main=null
+var main:Wa2Main
 var load_page=null
+var title_menu_page=null
 var cur_bgm:int=0
 var bgm_volume:int=0
 var bgm_loop:int=0
+var game_state=0
 func add_back_info():
 	if lookbacks.size()>=Consts.MAX_BACK_INFO_COUNT:
 		lookbacks.pop_front()
@@ -99,7 +101,7 @@ func load_file(no:int):
 	viewport.set_shader_var("bg1_offset",data.bg_offset)
 	viewport.set_shader_var("bg1_scale",data.bg_scale)
 	viewport.set_shader_var("amp_strength",data.amp_strength)
-	Globals.bg_draw_frame=0
+	viewport.bg_draw_frame=0
 	viewport.duration=0
 	viewport.change_bg()
 	viewport.draw_image()
