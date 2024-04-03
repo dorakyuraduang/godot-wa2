@@ -5,7 +5,7 @@
 [ext_resource type="Script" path="res://src/ui/save_page.gd" id="1_s3xba"]
 [ext_resource type="Texture2D" uid="uid://r25dhney8o20" path="res://assets/grp/sys_09000.tga" id="3_6yasr"]
 [ext_resource type="Texture2D" uid="uid://bkt72x50htjvp" path="res://assets/grp/sys_09100.tga" id="4_8mjx4"]
-[ext_resource type="PackedScene" uid="uid://2rgflu1ybhl4" path="res://src/ui/data_page.tscn" id="6_blvmy"]
+[ext_resource type="PackedScene" uid="uid://vhl58c04l614" path="res://src/ui/save_slot.tscn" id="5_qik6m"]
 [ext_resource type="Texture2D" uid="uid://b83b2wouv07rs" path="res://assets/grp/sys_00110.tga" id="7_i0eel"]
 [ext_resource type="FontFile" uid="uid://8lmuk1m2rsdk" path="res://assets/fonts/simhei.ttf" id="8_btauw"]
 
@@ -210,8 +210,52 @@ libraries = {
 "": SubResource("AnimationLibrary_1lri4")
 }
 
-[node name="DataPage" parent="." instance=ExtResource("6_blvmy")]
+[node name="GridContainer" type="GridContainer" parent="."]
 layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -632.0
+offset_top = -252.0
+offset_right = 632.0
+offset_bottom = 228.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/h_separation = 0
+theme_override_constants/v_separation = 0
+columns = 2
+
+[node name="SaveSlot" parent="GridContainer" instance=ExtResource("5_qik6m")]
+layout_mode = 2
+
+[node name="SaveSlot2" parent="GridContainer" instance=ExtResource("5_qik6m")]
+layout_mode = 2
+
+[node name="SaveSlot3" parent="GridContainer" instance=ExtResource("5_qik6m")]
+layout_mode = 2
+
+[node name="SaveSlot4" parent="GridContainer" instance=ExtResource("5_qik6m")]
+layout_mode = 2
+
+[node name="SaveSlot5" parent="GridContainer" instance=ExtResource("5_qik6m")]
+layout_mode = 2
+
+[node name="SaveSlot6" parent="GridContainer" instance=ExtResource("5_qik6m")]
+layout_mode = 2
+
+[node name="SaveSlot7" parent="GridContainer" instance=ExtResource("5_qik6m")]
+layout_mode = 2
+
+[node name="SaveSlot8" parent="GridContainer" instance=ExtResource("5_qik6m")]
+layout_mode = 2
+
+[node name="SaveSlot9" parent="GridContainer" instance=ExtResource("5_qik6m")]
+layout_mode = 2
+
+[node name="SaveSlot10" parent="GridContainer" instance=ExtResource("5_qik6m")]
+layout_mode = 2
 
 [node name="Tip" type="ColorRect" parent="."]
 visible = false

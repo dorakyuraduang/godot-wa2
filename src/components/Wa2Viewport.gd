@@ -35,7 +35,7 @@ func draw_image():
 	cur_texture.update(cur_image)
 	new_texture.update(new_image)
 	var counter:=0
-	while (counter<duration):
+	while (counter<duration and duration>0):
 		await get_tree().physics_frame
 		counter+=1
 		texture_viewport.material.set_shader_parameter("time",float(counter)/duration)
@@ -72,3 +72,19 @@ func get_shader_var(prop:String):
 	return texture_viewport.material.get_shader_parameter(prop)
 func set_shader_var(prop:String,value):
 	texture_viewport.material.set_shader_parameter(prop,value)	
+func change_bg(offset:Vector2=Vector2.ZERO,_scale:Vector2=Vector2.ONE):
+	var image=load(Globals.cur_bg)
+	set_bg2_image(image)
+	set_bg2_offset(offset)
+	set_bg2_scale(_scale)
+	Globals.move_flag=false
+	if Globals.bg_draw_frame>0:
+		for i in Globals.bg_draw_frame:
+			await get_tree().process_frame
+			set_bg2_alpha(i/float(Globals.bg_draw_frame))
+			if Globals.is_skip():
+				break
+	set_bg2_alpha(0.0)
+	set_bg1_image(image)
+	set_bg1_scale(_scale)
+	set_bg1_offset(offset)

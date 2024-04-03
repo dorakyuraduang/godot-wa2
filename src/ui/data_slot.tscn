@@ -1,0 +1,59 @@
+[gd_scene load_steps=7 format=3 uid="uid://vhl58c04l614"]
+
+[ext_resource type="Script" path="res://src/ui/data_slot.gd" id="1_vm0sp"]
+[ext_resource type="Texture2D" uid="uid://wm4sdsd3yv1x" path="res://assets/grp/sys_01010.tga" id="2_yye6e"]
+[ext_resource type="Script" path="res://src/ui/wa2number.gd" id="3_74ipk"]
+[ext_resource type="FontFile" uid="uid://8lmuk1m2rsdk" path="res://assets/fonts/simhei.ttf" id="4_t2knk"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6o85h"]
+atlas = ExtResource("2_yye6e")
+region = Rect2(0, 0, 632, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pbthv"]
+atlas = ExtResource("2_yye6e")
+region = Rect2(632, 0, 632, 96)
+
+[node name="DataSlot" type="TextureButton"]
+custom_minimum_size = Vector2(632, 96)
+offset_right = 632.0
+offset_bottom = 96.0
+script = ExtResource("1_vm0sp")
+
+[node name="NoData" type="TextureRect" parent="."]
+layout_mode = 0
+offset_right = 632.0
+offset_bottom = 96.0
+texture = SubResource("AtlasTexture_6o85h")
+
+[node name="ExistData" type="TextureRect" parent="."]
+visible = false
+layout_mode = 0
+offset_right = 632.0
+offset_bottom = 96.0
+texture = SubResource("AtlasTexture_pbthv")
+
+[node name="No" type="Node2D" parent="."]
+position = Vector2(12, 24)
+script = ExtResource("3_74ipk")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+custom_minimum_size = Vector2(128, 72)
+layout_mode = 0
+offset_left = 54.0
+offset_top = 10.0
+offset_right = 182.0
+offset_bottom = 82.0
+expand_mode = 1
+
+[node name="Date" type="Node2D" parent="."]
+position = Vector2(188, 24)
+script = ExtResource("3_74ipk")
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 0
+offset_left = 188.0
+offset_top = 46.0
+offset_right = 428.0
+offset_bottom = 67.0
+theme_override_fonts/font = ExtResource("4_t2knk")
+theme_override_font_sizes/font_size = 20

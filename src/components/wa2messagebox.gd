@@ -106,3 +106,7 @@ func _on_back_button_down():
 
 func _on_save_button_down():
 	Globals.save_page.open()
+
+
+func _on_load_button_down():
+	Globals.load_page.open()

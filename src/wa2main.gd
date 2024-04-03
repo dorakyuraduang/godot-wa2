@@ -2,9 +2,6 @@ extends Control
 class_name Wa2Main
 var game_state=0
 var game_await:=false
-var lscr=null
-var label:=0
-var ws:Wa2Script=Wa2Script.new()
 #@onready var chars:Wa2Chars=$Wa2Chars
 #@onready var bg:Sprite2D=$Wa2Bg
 @onready var viewport:SubViewportContainer=$Wa2Viewport
@@ -51,14 +48,17 @@ func amp_command(path,v1:int):
 		#print("设置false")
 		#bg.material.set_shader_parameter("activation",false)
 func _ready():
+	Globals.main=self
+	Ws.func_lut=func_lut
 	Globals.viewport=viewport
 	Globals.message_box=message_box
 	Globals.backlog=$Pages/BackLog
 	Globals.save_page=$Pages/SavePage
-	load_script(6001)
+	Globals.load_page=$Pages/LoadPage
+	Ws.load(6001)
 	while (true):
 		await get_tree().physics_frame
-		await  parse_command()
+		await  Ws.parse_command()
 func _physics_process(delta):
 	if Input.is_action_pressed("skip"):
 		Globals.ctrl_pressed=true
@@ -71,42 +71,14 @@ func screenshot():
 	#var image:Image=viewport.get_image()
 	#image.save_png("res://test.png")
 func load_script(id:int):
-	ws.load(id)
-func parse_command():
-	var parse_end:=false
-	var args:Array
-	var cb:Callable
-	while (!parse_end):
-		match ws.read_int():
-			6:
-				match ws.read_int():
-					0x1e:
-						args=[]
-					0x10:
-						var a=args.pop_back()
-						args[args.size()-1]+=a
-					0x17:
-						args[args.size()-1]*=-1
-			3:
-				args.append(ws.str_args[ws.read_int()])
-			5:
-				match ws.read_int():
-					3:
-						args.append(ws.read_int())
-					4:
-						args.append(ws.read_float())
-			4:
-				var func_idx=ws.read_int()
-				if func_lut.has(func_idx):
-					cb=func_lut[func_idx]
-				parse_end=true
-	if cb:
-		print(cb)
-		print(args)
-		await  cb.callv(args)
+	Ws.load(id)
+
 func cl_command(char:int,ef:int,frame:int):
 	await viewport.cl(char,ef,frame)
 func bgm_command(id:int,v1:int,loop:int,volume:int):
+	Globals.cur_bgm=id
+	Globals.bgm_volume=volume
+	Globals.bgm_loop=loop
 	Sound.play_bgm(id,bool(loop),volume)
 func wait_command(frame:int,v1:int=0,v2:int=0,v3:int=0):
 	Events.add_timer(frame)
@@ -120,54 +92,39 @@ func set_bg_type(type:int):
 func bg_command(ef_id:int,id:int,no:int,frame:int,u1,u2,u3,u4,v5):
 	Globals.cur_bg=Wa2Res.get_bg_path(id,Globals.bg_type,no)
 	Globals.bg_draw_frame=frame
-	await change_bg()
+	await viewport.change_bg()
 	viewport.clear()
 func bg2_command(ef_id:int,id:int,no:int,frame:int,v1,v2,v3,v4,v5,v6):
 	viewport.set_chars_priority(true)
 	viewport.draw_image()
 	if id<100000:
 		Globals.cur_bg=Wa2Res.get_bg_path(id,Globals.bg_type,no)
-		await change_bg()
+		await viewport.change_bg()
 	viewport.set_chars_priority(false)
 func bg3_command(ef_id:int,id:int,no:int,frame:int,v1:int,offset_x:int,offset_y:int,scale_x,scale_y,v6,v7):
 	Globals.cur_bg=Wa2Res.get_bg_path(id,Globals.bg_type,no)
 	Globals.bg_draw_frame=frame
-	await change_bg(Vector2(offset_x-v1,offset_y),Vector2(scale_x,scale_y))
+	await viewport.change_bg(Vector2(offset_x-v1,offset_y),Vector2(scale_x,scale_y))
 	viewport.clear()
 func bg4_command(ef_id:int,id:int,no:int,frame:int,v1:int,v2:int,v3:int,v4:int,v5):
 	Globals.cur_bg=Wa2Res.get_cg_path(id,no)
 	Globals.bg_draw_frame=frame
-	await change_bg()
+	await viewport.change_bg()
 	viewport.clear()
 func bg_type_command(type:int):
 	set_bg_type(type)
 	return
 func se_command(channel:int,id:int,frame:int,loop:int,volume:int,v4:int):
 	Sound.play_se(channel,id,bool(loop),frame,volume)
-func change_bg(offset:Vector2=Vector2.ZERO,_scale:Vector2=Vector2.ONE):
-	var image=load(Globals.cur_bg)
-	viewport.set_bg2_image(image)
-	viewport.set_bg2_offset(offset)
-	viewport.set_bg2_scale(_scale)
-	Globals.move_flag=false
-	for i in Globals.bg_draw_frame:
-		await get_tree().process_frame
-		viewport.set_bg2_alpha(i/float(Globals.bg_draw_frame))
-		if Globals.is_skip():
-			break
-	viewport.set_bg2_alpha(0.0)
-	viewport.set_bg1_image(image)
-	viewport.set_bg1_scale(_scale)
-	viewport.set_bg1_offset(offset)
 	#print("缩放",viewport.get_bg_scale())
 	#bg.scale=_scale
 	#bg.offset.x=offset
 	#viewport.texture=image
 	return 
 func label_command(v1:int,id:int):
-	label=id
+	Globals.label=id
 func voice_command(char:int,v1:int,v2:int,v3:int,id:int):
-	Globals.cur_voice="%04d_%04d_%02d.OGG"%[label,id,char]
+	Globals.cur_voice="%04d_%04d_%02d.OGG"%[Globals.label,id,char]
 func stop_se_command(channel:int,frame:int):
 	Sound.stop_se(channel,frame)
 func _gui_input(event):
@@ -223,6 +180,7 @@ func char_command(char:int,id:int,pos:int,v1:int,v2:int,frame:int,v3:int,v4:int)
 	await viewport.draw_image()
 func char2_command(char:int,id:int,pos:int,v1:int,v2:int,v3:int,v4:int):
 	Globals.add_char(char,id,pos)
+	viewport.duration=v3
 	Globals.bg_draw_frame=v3
 func move_command(offset_x:int,offset_y:int,frame:int,v2:int,v3:int):
 	bg_move(Vector2(offset_x,offset_y),frame)

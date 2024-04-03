@@ -27,6 +27,7 @@ Wa2Res="*res://src/Wa2res.gd"
 Globals="*res://src/globals.gd"
 Events="*res://src/wa2event.gd"
 Sound="*res://src/wa2sound.gd"
+Ws="*res://src/wa2script.gd"
 
 [display]
 

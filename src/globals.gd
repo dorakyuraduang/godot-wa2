@@ -24,6 +24,11 @@ var message_box=null
 var backlog=null
 var bg_draw_frame:=0
 var viewport=null
+var main=null
+var load_page=null
+var cur_bgm:int=0
+var bgm_volume:int=0
+var bgm_loop:int=0
 func add_back_info():
 	if lookbacks.size()>=Consts.MAX_BACK_INFO_COUNT:
 		lookbacks.pop_front()
@@ -58,7 +63,11 @@ func save_file(no:int):
 		"bg_offset":viewport.get_shader_var("bg1_offset"),
 		"bg_scale":viewport.get_shader_var("bg1_scale"),
 		"amp_strength":viewport.get_shader_var("amp_strength"),
-		"image":image.data
+		"image":image.data,
+		"offset":Ws.offset,
+		"cur_bgm":cur_bgm,
+		"bgm_loop":bgm_loop,
+		"bgm_volume":bgm_volume
 	}
 	file.store_var(save_data)
 	file.close()
@@ -70,6 +79,31 @@ func get_file_info(page:int):
 			var data=file.get_var()
 			file_info[i]=data
 			file.close()
-		else:
-			file_info[i]=null
 	return file_info
+func load_file(no:int):
+	var file = FileAccess.open("user://%02d.sav"%no,FileAccess.READ)
+	var data=file.get_var()
+	file.close()
+	cur_text=data.cur_text
+	cur_name=data.cur_name
+	cur_voice=data.cur_voice
+	cur_bg=data.cur_bg
+	char_info=data.char_info
+	label=data.label
+	bg_type=bg_type
+	cur_bg=data.cur_bg
+	bgm_loop=data.bgm_loop
+	cur_bgm=data.cur_bgm
+	bgm_volume=data.bgm_volume
+	viewport.set_shader_var("amp_mode",data.amp_mode)
+	viewport.set_shader_var("bg1_offset",data.bg_offset)
+	viewport.set_shader_var("bg1_scale",data.bg_scale)
+	viewport.set_shader_var("amp_strength",data.amp_strength)
+	Globals.bg_draw_frame=0
+	viewport.duration=0
+	viewport.change_bg()
+	viewport.draw_image()
+	Sound.stop_voice()
+	Ws.load(data.label,data.offset)
+	Sound.play_bgm(cur_bgm,bool(bgm_loop),bgm_volume)
+	message_box.update_text()
