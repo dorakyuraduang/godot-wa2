@@ -4,7 +4,6 @@ var bnr_buf:PackedByteArray
 var offset:=0
 var args=[]
 var str_args=[]
-var func_lut={}
 func load(id:int,_offset=0):
 	offset=0
 	var path="%s%04d.bnr"%[Consts.SCRIPT_PATH,id]
@@ -59,8 +58,8 @@ func parse_command():
 						args.append(read_float())
 			4:
 				var func_idx=read_int()
-				if func_lut.has(func_idx):
-					cb=func_lut[func_idx]
+				if Globals.func_lut.has(func_idx):
+					cb=Globals.func_lut[func_idx]
 				parse_end=true
 	if cb:
 		print(cb)

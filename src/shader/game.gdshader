@@ -68,8 +68,8 @@ void fragment() {
 		bg2_color=mix(vec4(gray2,gray2,gray2,1.0)* colora2,bg2_color*colora2,amp_strength);
 	}
 	if (chars_priority){
-		vec4 final_color=mix(bg2_color,chars_color,chars_color.a);
-		COLOR=mix(bg1_color,final_color,bg2_alpha);
+		vec4 final_color=mix(bg1_color,bg2_color,bg2_alpha);
+		COLOR=mix(final_color,chars_color,chars_color.a);
 	}else{
 		vec4 final_color=mix(bg1_color,chars_color,chars_color.a);
 		COLOR=mix(final_color,bg2_color,bg2_alpha);

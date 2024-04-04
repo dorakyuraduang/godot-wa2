@@ -2,11 +2,10 @@ extends SubViewportContainer
 @onready var sub_viewport=$SubViewport
 @onready var texture_viewport=$SubViewport/ColorRect
 var bg_draw_frame:=0
-var char_info={}
 var bg_texture:Texture
-var bg_image=Image.create(1280,720,false,Image.FORMAT_RGB8)
-var cur_image=Image.create(1280,720,false,Image.FORMAT_RGBA8)
-var new_image=Image.create(1280,720,false,Image.FORMAT_RGBA8)
+var bg_image:Image=Image.create(1280,720,false,Image.FORMAT_RGB8)
+var cur_image:Image=Image.create(1280,720,false,Image.FORMAT_RGBA8)
+var new_image:Image=Image.create(1280,720,false,Image.FORMAT_RGBA8)
 var cur_texture:ImageTexture=ImageTexture.create_from_image(cur_image)
 var new_texture:ImageTexture=ImageTexture.create_from_image(new_image)
 var duration:=0
@@ -15,9 +14,10 @@ func set_amp_mode(mode:int):
 func _ready():
 	texture_viewport.material.set_shader_parameter("texture1",cur_texture)
 	texture_viewport.material.set_shader_parameter("texture2",new_texture)
-func cl(char:int,ef:int,duration:int):
+func cl(char:int,ef:int,frame:int):
+	duration=frame
 	Globals.char_info.erase(char)
-	draw_image()
+	await draw_image()
 func clear():
 	Globals.char_info.clear()
 	cur_image.fill(Color(0,0,0,0))
@@ -27,12 +27,14 @@ func clear():
 func get_char_pos(pos:int,size:Vector2):
 	return Consts.CHAR_POS[pos]-Vector2(((size.x-1280)/2.0),0)
 func draw_image():
+	#cur_image.save_png("res://a.png")
 	new_image.fill(Color(0,0,0,0))
-	texture_viewport.material.set_shader_parameter("time",0.0)
+	print(Globals.char_info)
 	for i in Globals.char_info:
 		var image=Wa2Res.get_char_image(i,Globals.char_info[i].id)
 		var pos=get_char_pos(Globals.char_info[i].pos,image.get_size())
 		new_image.blend_rect(image,Rect2i(Vector2i.ZERO,image.get_size()),pos)
+	texture_viewport.material.set_shader_parameter("time",0.0)
 	cur_texture.update(cur_image)
 	new_texture.update(new_image)
 	var counter:=0
@@ -43,7 +45,6 @@ func draw_image():
 		if Globals.is_skip():
 			break
 	cur_image=new_image.duplicate()
-	new_image.fill(Color(0,0,0,0))
 	texture_viewport.material.set_shader_parameter("time",1.0)	
 func set_bg1_image(image:Texture):
 	texture_viewport.material.set_shader_parameter("bg1_texture",image)

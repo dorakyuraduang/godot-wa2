@@ -1,19 +1,6 @@
-[gd_scene load_steps=5 format=3 uid="uid://dmh8ncf7f1j8x"]
+[gd_scene load_steps=2 format=3 uid="uid://dmh8ncf7f1j8x"]
 
 [ext_resource type="Script" path="res://test.gd" id="1_o2pos"]
-[ext_resource type="Shader" path="res://src/shader/gray.gdshader" id="2_nqhcs"]
-[ext_resource type="Texture2D" uid="uid://cikgrvo32lvxi" path="res://assets/char/kaz002101.tga" id="3_mmg7o"]
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_e0g0i"]
-shader = ExtResource("2_nqhcs")
-shader_parameter/activation = false
-shader_parameter/amount = 0.0
 
 [node name="test" type="Node2D"]
 script = ExtResource("1_o2pos")
-
-[node name="Wa2Bg" type="Sprite2D" parent="."]
-material = SubResource("ShaderMaterial_e0g0i")
-position = Vector2(640, 360)
-scale = Vector2(1.5, 1.5)
-texture = ExtResource("3_mmg7o")

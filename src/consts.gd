@@ -14,7 +14,7 @@ enum EventMode{
 }
 const MAX_BACK_INFO_COUNT:=100
 const VOICE_WAIT_FRAME=120
-const MAX_SE_CHANNELS=3
+const MAX_SE_CHANNELS=4
 const CHAR_IMAGE_PATH="res://assets/char/"
 const BG_IMAGE_PATH="res://assets/bak/"
 const SCRIPT_PATH="res://assets/script/"
@@ -23,19 +23,23 @@ const BGM_PATH="res://assets/bgm/"
 const VOICE_PATH="res://assets/voice/"
 const CG_IMAGE_PATH="res://assets/grp/"
 const CHAR_POS={
-	0:Vector2(-320,0),
+	0:Vector2(-290,0),
 	1:Vector2(0,0),
-	2:Vector2(320,0)
+	2:Vector2(290,0),
+	3:Vector2(-380,0),
+	4:Vector2(380,0)
 }
 const CHAR_NAMES={
 	1:"kaz",
 	35:"miy",
 	16:"you",
 	2:"set",
-	10:"ioo",
-	11:"mat",
-	33:"mam",
-	19:"tom"	
+	10:"tak",
+	11:"ioo",
+	33:"suz",
+	19:"tom",
+	14:"mam",
+	31:"mat"
 }
 const CHAPTER=[
 	[],
