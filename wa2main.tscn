@@ -18,6 +18,7 @@ shader_parameter/bg1_offset = Vector2(0, 0)
 shader_parameter/bg2_scale = Vector2(1, 1)
 shader_parameter/bg2_offset = Vector2(0, 0)
 shader_parameter/amp_mode = 2
+shader_parameter/amp_flag = false
 shader_parameter/amp_strength = 0.0
 shader_parameter/bg2_alpha = 0.0
 shader_parameter/time = 0.0

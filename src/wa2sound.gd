@@ -14,10 +14,10 @@ func _ready():
 		var audio:Wa2Audio=Wa2Audio.new()
 		se_audios.append(audio)
 		add_child(audio)
-func play_bgm(id:int,loop_flag:bool,volume:int):
+func play_bgm(id:int,loop_flag:bool=true,volume:int=255):
 	bgm_audio.play_stream(Wa2Res.get_bgm_stream(id,false),loop_flag,0,volume/255.0)
 	bgm_audio.loop_stream=Wa2Res.get_bgm_stream(id,true)
-func stop_bgm(frame:int):
+func stop_bgm(frame:int=0):
 	bgm_audio.stop_stream(frame)
 func play_se(channel:int,id:int,loop_flag:bool,frame:int,volume:int):
 	se_audios[channel].play_stream(Wa2Res.get_se_stream(id),loop_flag,frame,volume/255.0)

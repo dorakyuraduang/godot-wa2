@@ -5,7 +5,6 @@ var offset:=0
 var args=[]
 var str_args=[]
 func load(id:int,_offset=0):
-	offset=0
 	var path="%s%04d.bnr"%[Consts.SCRIPT_PATH,id]
 	bnr_buf=FileAccess.get_file_as_bytes(path)
 	var txt_str=FileAccess.get_file_as_string("%s%04d.txt"%[Consts.SCRIPT_PATH,id])
@@ -34,10 +33,11 @@ func read_float():
 	return f32
 
 func parse_command():
+	Globals.cur_command=null
 	var parse_end:=false
 	var args:Array
 	var cb:Callable
-	while (!parse_end):
+	while (!parse_end and offset<bnr_buf.size()):
 		match Ws.read_int():
 			6:
 				match read_int():
@@ -62,6 +62,5 @@ func parse_command():
 					cb=Globals.func_lut[func_idx]
 				parse_end=true
 	if cb:
-		print(cb)
 		print(args)
-		await  cb.callv(args)
+		Globals.cur_command=cb.bindv(args)

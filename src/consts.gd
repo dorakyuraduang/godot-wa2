@@ -22,6 +22,10 @@ const SE_PATH="res://assets/se/"
 const BGM_PATH="res://assets/bgm/"
 const VOICE_PATH="res://assets/voice/"
 const CG_IMAGE_PATH="res://assets/grp/"
+enum Page{
+	TITLE_MENU,
+	GAME
+}
 const CHAR_POS={
 	0:Vector2(-290,0),
 	1:Vector2(0,0),

@@ -9,20 +9,21 @@ func _ready():
 	Globals.title_menu_page=$Pages/TitleMenu
 	Globals.title_menu_page.open()
 	while (true):
-		await get_tree().physics_frame
-		if Globals.game_state==1:	
-			await  Ws.parse_command()
+		await get_tree().process_frame
+		if Globals.game_state==1:
+			if Globals.cur_command:
+				print(Globals.cur_command)
+				await Globals.cur_command.call()
+			Ws.parse_command()
 func _physics_process(delta):
 	if Input.is_action_pressed("skip"):
 		Globals.ctrl_pressed=true
 	else:
 		Globals.ctrl_pressed=false
-	if Input.is_action_pressed("f12"):
-		screenshot()
 func screenshot():
 	pass
 func _gui_input(event):
-	if Globals.is_click(event):
+	if Globals.is_click(event) and Globals.game_state==1:
 		if Globals.text_state==1:
 			Globals.click_text_state=1
 		elif Globals.text_state==2:

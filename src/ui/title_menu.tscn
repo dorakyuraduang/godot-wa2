@@ -1,4 +1,4 @@
-[gd_scene load_steps=43 format=3 uid="uid://b6u3qm7g3fnoj"]
+[gd_scene load_steps=46 format=3 uid="uid://b6u3qm7g3fnoj"]
 
 [ext_resource type="Script" path="res://src/ui/title_menu.gd" id="1_uc426"]
 [ext_resource type="Texture2D" uid="uid://bm1d7y6ee1sdl" path="res://assets/grp/T0012.tga" id="1_vuves"]
@@ -7,8 +7,11 @@
 [ext_resource type="Texture2D" uid="uid://cflxc324j4wrc" path="res://assets/grp/T0201.tga" id="3_clnv1"]
 [ext_resource type="PackedScene" uid="uid://bkg3mbvjllejg" path="res://src/components/menu_button.tscn" id="4_t6tvv"]
 [ext_resource type="Texture2D" uid="uid://c5i0cdlplxufx" path="res://assets/grp/T0100.tga" id="5_ivsox"]
+[ext_resource type="AudioStream" uid="uid://btm2lrxrotcg3" path="res://assets/se/SE_8905.WAV" id="7_1jxck"]
 [ext_resource type="Texture2D" uid="uid://bbix8mfvw2url" path="res://assets/grp/AQUAPLUS.tga" id="7_32ukb"]
+[ext_resource type="AudioStream" uid="uid://b13b8pi8oj61y" path="res://assets/se/SE_9212.WAV" id="7_vaai7"]
 [ext_resource type="Texture2D" uid="uid://dkgwk5hgrmboc" path="res://assets/grp/T0000.tga" id="8_valac"]
+[ext_resource type="AudioStream" uid="uid://c4vksbaucagge" path="res://assets/se/SE_9015.WAV" id="8_ydbob"]
 [ext_resource type="Texture2D" uid="uid://bvf3sh27m4ey4" path="res://assets/grp/weather.tga" id="10_m1p8g"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_4rxvu"]
@@ -19,8 +22,9 @@ shader_parameter/bg1_offset = Vector2(0, 0)
 shader_parameter/bg2_scale = Vector2(1, 1)
 shader_parameter/bg2_offset = Vector2(0, 0)
 shader_parameter/amp_mode = 2
+shader_parameter/amp_flag = false
 shader_parameter/amp_strength = 0.0
-shader_parameter/bg2_alpha = 0.0
+shader_parameter/bg2_alpha = 1.0
 shader_parameter/time = 0.0
 shader_parameter/bg1_texture = ExtResource("7_32ukb")
 
@@ -258,7 +262,7 @@ tracks/12/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [0.0]
+"values": [1.0]
 }
 tracks/13/type = "value"
 tracks/13/imported = false
@@ -346,6 +350,18 @@ tracks/1/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("GPUParticles2D:emitting")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(1),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
 }
 
 [sub_resource type="Animation" id="Animation_po4he"]
@@ -671,18 +687,21 @@ mouse_filter = 2
 [node name="Start1" parent="InitalStart" instance=ExtResource("4_t6tvv")]
 layout_mode = 0
 texture_normal = SubResource("AtlasTexture_osct2")
+click_se = ExtResource("7_1jxck")
 
 [node name="Start2" parent="InitalStart" instance=ExtResource("4_t6tvv")]
 layout_mode = 0
 offset_top = 40.0
 offset_bottom = 80.0
 texture_normal = SubResource("AtlasTexture_dywql")
+click_se = ExtResource("7_1jxck")
 
 [node name="StartBack" parent="InitalStart" instance=ExtResource("4_t6tvv")]
 layout_mode = 0
 offset_top = 200.0
 offset_bottom = 240.0
 texture_normal = SubResource("AtlasTexture_qseaf")
+click_se = ExtResource("8_ydbob")
 
 [node name="TitleMenu" type="Control" parent="."]
 custom_minimum_size = Vector2(320, 240)
@@ -705,6 +724,7 @@ layout_mode = 0
 disabled = true
 texture_normal = SubResource("AtlasTexture_y7jcp")
 texture_pressed = SubResource("AtlasTexture_j56w6")
+click_se = ExtResource("7_vaai7")
 
 [node name="Load" parent="TitleMenu" instance=ExtResource("4_t6tvv")]
 modulate = Color(1, 1, 1, 0)
@@ -715,6 +735,7 @@ offset_bottom = 80.0
 disabled = true
 texture_normal = SubResource("AtlasTexture_khyse")
 texture_pressed = SubResource("AtlasTexture_b7r5i")
+click_se = ExtResource("7_vaai7")
 
 [node name="Options" parent="TitleMenu" instance=ExtResource("4_t6tvv")]
 modulate = Color(1, 1, 1, 0)
@@ -725,6 +746,7 @@ offset_bottom = 120.0
 disabled = true
 texture_normal = SubResource("AtlasTexture_71ye6")
 texture_pressed = SubResource("AtlasTexture_pmpbt")
+click_se = ExtResource("7_vaai7")
 
 [node name="Quit" parent="TitleMenu" instance=ExtResource("4_t6tvv")]
 modulate = Color(1, 1, 1, 0)
@@ -735,6 +757,7 @@ offset_bottom = 200.0
 disabled = true
 texture_normal = SubResource("AtlasTexture_prpdi")
 texture_pressed = SubResource("AtlasTexture_4ochr")
+click_se = ExtResource("8_ydbob")
 
 [node name="TextureRect3" type="TextureRect" parent="TitleMenu"]
 modulate = Color(1, 1, 1, 0)
@@ -770,4 +793,7 @@ color = Color(0, 0, 0, 0)
 
 [connection signal="button_down" from="InitalStart/Start1" to="." method="_on_start_1_button_down"]
 [connection signal="button_down" from="InitalStart/Start2" to="." method="_on_start_2_button_down"]
+[connection signal="button_down" from="InitalStart/StartBack" to="." method="_on_start_back_button_down"]
 [connection signal="button_down" from="TitleMenu/Start" to="." method="_on_start_button_down"]
+[connection signal="button_down" from="TitleMenu/Load" to="." method="_on_load_button_down"]
+[connection signal="button_down" from="TitleMenu/Quit" to="." method="_on_quit_button_down"]

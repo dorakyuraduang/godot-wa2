@@ -29,7 +29,6 @@ func get_char_pos(pos:int,size:Vector2):
 func draw_image():
 	#cur_image.save_png("res://a.png")
 	new_image.fill(Color(0,0,0,0))
-	print(Globals.char_info)
 	for i in Globals.char_info:
 		var image=Wa2Res.get_char_image(i,Globals.char_info[i].id)
 		var pos=get_char_pos(Globals.char_info[i].pos,image.get_size())
@@ -69,7 +68,9 @@ func get_bg1_offset():
 func set_chars_priority(flag:bool):
 	texture_viewport.material.set_shader_parameter("chars_priority",flag)
 func get_image():
-	return sub_viewport.get_texture().get_image()
+	var image:Image=sub_viewport.get_texture().get_image()
+	image.convert(Image.FORMAT_RGB8)
+	return image
 func get_shader_var(prop:String):
 	return texture_viewport.material.get_shader_parameter(prop)
 func set_shader_var(prop:String,value):

@@ -1,6 +1,7 @@
 extends Node
 var os_name=OS.get_name()
 var text_speed=40
+var script_offset=0
 var game_state:=0
 var message_box_state:=0
 var skip_flag:=false
@@ -8,6 +9,7 @@ var move_flag:=false
 var ctrl_pressed:=false
 var auto_flag:=false
 var event_mode:=0
+var cur_command=null
 var auto_wait_frame:=120
 var label:=0
 var bg_type:=0
@@ -31,6 +33,7 @@ var title_menu_page=null
 var cur_bgm:int=0
 var bgm_volume:int=0
 var bgm_loop:int=0
+var cur_page:=0
 var func_lut={
 	0xc5:remenu_command,
 	0xd2:move_command,
@@ -90,6 +93,7 @@ func save_file(no:int):
 		"date":Time.get_datetime_dict_from_system(),
 		"label":label,
 		"bg_type":bg_type,
+		"amp_flag":viewport.get_shader_var("amp_flag"),
 		"amp_mode":viewport.get_shader_var("amp_mode"),
 		"bg_offset":viewport.get_shader_var("bg1_offset"),
 		"bg_scale":viewport.get_shader_var("bg1_scale"),
@@ -112,9 +116,12 @@ func get_file_info(page:int):
 			file.close()
 	return file_info
 func load_file(no:int):
+	game_state=0
 	var file = FileAccess.open("user://%02d.sav"%no,FileAccess.READ)
 	var data=file.get_var()
 	file.close()
+	Events.emit_signal("next")
+	#await  get_tree().physics_frame
 	cur_text=data.cur_text
 	cur_name=data.cur_name
 	cur_voice=data.cur_voice
@@ -130,21 +137,28 @@ func load_file(no:int):
 	viewport.set_shader_var("bg1_offset",data.bg_offset)
 	viewport.set_shader_var("bg1_scale",data.bg_scale)
 	viewport.set_shader_var("amp_strength",data.amp_strength)
+	viewport.set_shader_var("amp_flag",data.amp_flag)
 	viewport.bg_draw_frame=0
 	viewport.duration=0
 	viewport.change_bg()
 	viewport.draw_image()
 	Sound.stop_voice()
+	Sound.stop_bgm(1)
 	Ws.load(data.label,data.offset)
+	cur_command=click_command.bindv([0])
 	Sound.play_bgm(cur_bgm,bool(bgm_loop),bgm_volume)
+	message_box.on(0)
 	message_box.update_text()
+	game_state=1
 func amp_setting_command(strength:int,mode:int):
 	viewport.set_shader_var("amp_strength",strength/255.0)
-	viewport.set_amp_mode(mode)
+	viewport.set_shader_var("amp_mode",mode)
 func amp_command(path,v1:int):
 	if path=="sepia.AMP":
+		viewport.set_shader_var("amp_flag",true)
 		viewport.set_amp(load("res://src/amp/sepia.tres"))
 	elif path=="":
+		viewport.set_shader_var("amp_flag",false)
 		viewport.set_amp(null)
 func cl_command(char:int,ef:int,frame:int):
 	await viewport.cl(char,ef,frame)
@@ -153,7 +167,7 @@ func bgm_command(id:int,v1:int,loop:int,volume:int):
 	Globals.bgm_volume=volume
 	Globals.bgm_loop=loop
 	Sound.play_bgm(id,bool(loop),volume)
-func wait_command(frame:int,v1:int=0,v2:int=0,v3:int=0):
+func wait_command(frame:int,v1:int=0,v2:int=0,v3:int=0,v4:int=0):
 	Events.add_timer(frame)
 	await Events.timeout
 func stop_bgm_command(frame:int):
@@ -220,7 +234,7 @@ func name_command(str):
 		Globals.cur_name=str
 func click_command(v1:int):
 	Events.add_event(Consts.EventMode.WAIT_CLICK)
-	await Events.click_text
+	await Events.next
 	Globals.cur_text=""
 	Globals.cur_name=""
 	Globals.cur_voice=""
@@ -247,13 +261,13 @@ func bg_move(offset:Vector2,frame):
 	await viewport.bg_move(offset,frame)
 func go_command(id:String,v1:int):
 	Ws.load(int(id))
-func sewait_command(c:int):
+func sewait_command(c:int,v1:int=0):
 	Events.wait_se_channel=c
 	Events.add_event(Consts.EventMode.WAIT_SE)
 	await Events.se_finished
 #char2 35 4 2000 1 0 0 15 256 128
 #35 3 2000 1 0 256 128 0
-func shake_command():
+func shake_command(v1:int=0,v2:int=0,v3:int=0,v4:int=0,v5:int=0,v6:int=0):
 	pass
 func is_click(event):
 	if Globals.os_name=="Android":
@@ -267,4 +281,6 @@ func is_click(event):
 		return false
 func remenu_command():
 	game_state=0
+	Sound.stop_all_se()
+	Sound.stop_bgm()
 	title_menu_page.open()
