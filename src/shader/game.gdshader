@@ -14,6 +14,19 @@ uniform bool amp_flag=false;
 uniform float amp_strength=0.0;
 uniform float bg2_alpha:hint_range(0.0, 1.0, 0.0001);
 uniform float time:hint_range(0.0, 1.0, 0.0001);
+vec4 blend_color(vec4 color1,vec4 color2){
+		vec4 res;
+		float sa = 1.0f - color2.a;
+		res.a = color1.a * sa + color2.a;
+		if (res.a == 0.0) {
+			return vec4(0.0);
+		} else {
+			res.r = (color1.r * color1.a * sa + color2.r * color2.a) / res.a;
+			res.g = (color1.g * color1.a * sa + color2.g * color2.a) / res.a;
+			res.b = (color1.b * color1.a * sa + color2.b * color2.a) / res.a;
+		}
+		return res;
+}
 vec4 get_bg_color(sampler2D bg_texture,vec2 uv,vec2 offset,vec2 scale){
 	vec2 size=vec2(textureSize(bg_texture,0))/vec2(1280,720);
 	vec2 scaled_uv = (uv /scale);
@@ -54,6 +67,7 @@ void fragment() {
     	vec4 blendedColor =tex2 * alpha2+tex1 * alpha1;
 		chars_color=blendedColor;
 	}
+	bg2_color.a=bg2_alpha;
 	if (amp_flag){
 		float bg1_gray=(bg1_color.r+bg1_color.g+bg1_color.b)/3.0;
 		float bg2_gray=(bg2_color.r+bg2_color.g+bg2_color.b)/3.0;
@@ -73,11 +87,11 @@ void fragment() {
 		bg2_color=mix(vec4(vec3(bg2_gray),bg2_color.a)* bg2_colora,bg2_color*bg2_colora,amp_strength);
 	}
 	if (chars_priority){
-		vec4 final_color=mix(bg1_color,bg2_color,bg2_alpha);
-		COLOR=mix(final_color,chars_color,chars_color.a);
+		vec4 final_color=blend_color(bg1_color,bg2_color);
+		COLOR=blend_color(final_color,chars_color);
 	}else{
-		vec4 final_color=mix(bg1_color,chars_color,chars_color.a);
-		COLOR=mix(final_color,bg2_color,bg2_alpha);
+		//color1 * (1.0 - color2.a) + color2 * color2.a;
+		vec4 final_color=blend_color(bg1_color,chars_color);
+		COLOR=blend_color(final_color,bg2_color);
 	}
-	
 }

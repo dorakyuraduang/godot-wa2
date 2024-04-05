@@ -7,6 +7,7 @@ signal wait_click
 @onready var label_sprite=$TextureRect3
 @onready var auto_sprite=$TextureRect4
 @onready var skip_sprite=$TextureRect5
+@onready var button_list=$HBoxContainer
 func update_text():
 	var wait_position=get_text_position(Globals.cur_text) 
 	wait_sprite.frame=0
@@ -43,6 +44,11 @@ func _physics_process(delta):
 				wait_sprite.hide()
 		else:
 			wait_sprite.hide()
+		for btn:Wa2Button in button_list.get_children():
+			if Globals.text_state==2:
+				btn.mouse_filter=Control.MOUSE_FILTER_STOP
+			else:
+				btn.mouse_filter=Control.MOUSE_FILTER_IGNORE
 func on(frame:=15):
 	show()
 	wait_sprite.frame=0
@@ -82,30 +88,34 @@ func _on_off_button_down():
 
 
 func _on_skip_button_down():
-	Globals.skip_flag=!Globals.skip_flag
-	if Globals.skip_flag:
-		skip_sprite.show()
-	else:
-		skip_sprite.hide()
+	if Globals.text_state==2:
+		Globals.skip_flag=!Globals.skip_flag
+		if Globals.skip_flag:
+			skip_sprite.show()
+		else:
+			skip_sprite.hide()
 
 func _on_auto_button_down():
-	Globals.auto_flag=!Globals.auto_flag
-	if Globals.auto_flag:
-		auto_sprite.show()
-		if Globals.text_state==2:
+	if Globals.text_state==2:
+		Globals.auto_flag=!Globals.auto_flag
+		if Globals.auto_flag:
+			auto_sprite.show()
 			Events.add_event(Consts.EventMode.WAIT_VOICE)
-	else:
-		auto_sprite.hide()
+		else:
+			auto_sprite.hide()
 
 
 func _on_back_button_down():
-	Globals.backlog.open()
-	off(0)
+	if Globals.text_state==2:
+		Globals.backlog.open()
+		off(0)
 
 
 func _on_save_button_down():
-	Globals.save_page.open()
+	if Globals.text_state==2:
+		Globals.save_page.open()
 
 
 func _on_load_button_down():
-	Globals.load_page.open()
+	if Globals.text_state==2:
+		Globals.load_page.open()

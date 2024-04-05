@@ -10,3 +10,8 @@ func _ready():
 	connect("button_down",func ():
 		Sound.play_sys_se(click_se)
 		)
+#InputEvent
+#func _gui_input(event):
+	##print(6)
+	#if disabled:
+		#Globals.main.propagate_call("_gui_input",[event])

@@ -1,4 +1,4 @@
-[gd_scene load_steps=151 format=3 uid="uid://dmufruyuv4wcg"]
+[gd_scene load_steps=152 format=3 uid="uid://dmufruyuv4wcg"]
 
 [ext_resource type="Script" path="res://src/components/wa2messagebox.gd" id="1_tv1cr"]
 [ext_resource type="Texture2D" uid="uid://dyh4udm10344k" path="res://assets/grp/sys_00001.tga" id="2_2btrp"]
@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://on255ij2s43i" path="res://assets/grp/sys_00000.tga" id="3_wovaf"]
 [ext_resource type="FontFile" uid="uid://8lmuk1m2rsdk" path="res://assets/fonts/simhei.ttf" id="4_1akk2"]
 [ext_resource type="Texture2D" uid="uid://2x1csqfhceel" path="res://assets/grp/sys_00010.tga" id="6_fk6if"]
+[ext_resource type="Script" path="res://src/components/wa2button.gd" id="7_n7wa8"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_k573s"]
 atlas = ExtResource("2_6g2ja")
@@ -1026,6 +1027,7 @@ offset_top = -40.0
 offset_right = -57.0
 grow_horizontal = 0
 grow_vertical = 0
+mouse_filter = 2
 theme_override_constants/separation = 0
 
 [node name="Save" type="TextureButton" parent="HBoxContainer"]
@@ -1039,6 +1041,7 @@ texture_hover = SubResource("AtlasTexture_vwqt2")
 texture_focused = SubResource("AtlasTexture_vwqt2")
 ignore_texture_size = true
 stretch_mode = 0
+script = ExtResource("7_n7wa8")
 
 [node name="Load" type="TextureButton" parent="HBoxContainer"]
 custom_minimum_size = Vector2(48, 48)
@@ -1051,8 +1054,9 @@ texture_hover = SubResource("AtlasTexture_0c7x8")
 texture_focused = SubResource("AtlasTexture_0c7x8")
 ignore_texture_size = true
 stretch_mode = 0
+script = ExtResource("7_n7wa8")
 
-[node name="TextureButton3" type="TextureButton" parent="HBoxContainer"]
+[node name="Option" type="TextureButton" parent="HBoxContainer"]
 custom_minimum_size = Vector2(48, 48)
 layout_mode = 2
 size_flags_horizontal = 0
@@ -1063,6 +1067,7 @@ texture_hover = SubResource("AtlasTexture_ad4l1")
 texture_focused = SubResource("AtlasTexture_ad4l1")
 ignore_texture_size = true
 stretch_mode = 0
+script = ExtResource("7_n7wa8")
 
 [node name="Back" type="TextureButton" parent="HBoxContainer"]
 custom_minimum_size = Vector2(48, 48)
@@ -1073,6 +1078,7 @@ texture_normal = SubResource("AtlasTexture_l4wiw")
 texture_pressed = SubResource("AtlasTexture_cgq2e")
 ignore_texture_size = true
 stretch_mode = 0
+script = ExtResource("7_n7wa8")
 
 [node name="Auto" type="TextureButton" parent="HBoxContainer"]
 custom_minimum_size = Vector2(48, 48)
@@ -1083,6 +1089,7 @@ texture_normal = SubResource("AtlasTexture_8v50n")
 texture_pressed = SubResource("AtlasTexture_yvyqg")
 ignore_texture_size = true
 stretch_mode = 0
+script = ExtResource("7_n7wa8")
 
 [node name="Skip" type="TextureButton" parent="HBoxContainer"]
 custom_minimum_size = Vector2(48, 48)
@@ -1093,6 +1100,7 @@ texture_normal = SubResource("AtlasTexture_l8q8a")
 texture_pressed = SubResource("AtlasTexture_jhrve")
 ignore_texture_size = true
 stretch_mode = 0
+script = ExtResource("7_n7wa8")
 
 [node name="Off" type="TextureButton" parent="HBoxContainer"]
 custom_minimum_size = Vector2(48, 48)
@@ -1103,6 +1111,7 @@ texture_normal = SubResource("AtlasTexture_kdqnb")
 texture_pressed = SubResource("AtlasTexture_k375j")
 ignore_texture_size = true
 stretch_mode = 0
+script = ExtResource("7_n7wa8")
 
 [node name="TextureRect3" type="TextureRect" parent="."]
 visible = false

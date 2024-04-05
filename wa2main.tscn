@@ -1,9 +1,8 @@
-[gd_scene load_steps=11 format=3 uid="uid://bsrlgftq373md"]
+[gd_scene load_steps=10 format=3 uid="uid://bsrlgftq373md"]
 
 [ext_resource type="Script" path="res://src/wa2main.gd" id="1_7jmlm"]
 [ext_resource type="Shader" path="res://src/shader/game.gdshader" id="2_1mwoy"]
 [ext_resource type="Script" path="res://src/components/Wa2Viewport.gd" id="2_vtebj"]
-[ext_resource type="Texture2D" uid="uid://dkgwk5hgrmboc" path="res://assets/grp/T0000.tga" id="4_kw2lo"]
 [ext_resource type="PackedScene" uid="uid://b6u3qm7g3fnoj" path="res://src/ui/title_menu.tscn" id="5_52h1w"]
 [ext_resource type="PackedScene" uid="uid://dmufruyuv4wcg" path="res://src/components/wa2messagebox.tscn" id="5_dr0jn"]
 [ext_resource type="PackedScene" uid="uid://x2dhyovke074" path="res://src/ui/back_log.tscn" id="6_2is34"]
@@ -98,8 +97,3 @@ layout_mode = 1
 
 [node name="LoadPage" parent="Pages" instance=ExtResource("7_j42al")]
 layout_mode = 1
-
-[node name="Sprite2D" type="Sprite2D" parent="."]
-visible = false
-texture = ExtResource("4_kw2lo")
-centered = false

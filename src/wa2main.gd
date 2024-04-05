@@ -1,6 +1,7 @@
 extends Control
 class_name Wa2Main
 func _ready():
+	Globals.main=self
 	Globals.viewport=$Wa2Viewport
 	Globals.message_box=$Wa2MessageBox
 	Globals.backlog=$Pages/BackLog

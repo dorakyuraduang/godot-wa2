@@ -270,15 +270,14 @@ func sewait_command(c:int,v1:int=0):
 func shake_command(v1:int=0,v2:int=0,v3:int=0,v4:int=0,v5:int=0,v6:int=0):
 	pass
 func is_click(event):
-	if Globals.os_name=="Android":
-		if event is InputEventScreenDrag or (event is InputEventScreenTouch and event.is_pressed()):
-			return true
-		else:
-			return false
-	elif  event is InputEventMouseButton and event.is_pressed() and event.button_index==MOUSE_BUTTON_LEFT:
+	if event is InputEventScreenDrag or (event is InputEventScreenTouch and event.is_pressed()):
 		return true
 	else:
 		return false
+	#elif  event is InputEventMouseButton and event.is_pressed() and event.button_index==MOUSE_BUTTON_LEFT:
+		#return true
+	#else:
+		#return false
 func remenu_command():
 	game_state=0
 	Sound.stop_all_se()
