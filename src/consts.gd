@@ -1,4 +1,9 @@
+@tool
 extends Node
+@onready var cn_font_texture=preload("res://assets/fonts/本体80.png")
+@onready var jp_font_texture=preload("res://assets/fonts/本体80jp.png")
+@onready var jp_font_shadow_texture=preload("res://assets/fonts/袋影80jp.png")
+@onready var cn_font_shadow_texture=preload("res://assets/fonts/袋影80.png")
 enum ClickState{
 	NONE,
 	NEW_PAGE,
@@ -52,3 +57,12 @@ const CHAPTER=[
 	[6001,6002,6003,6004,6005],
 	[6101,6102,6103,6104],
 ]
+var font_map=get_font_map()
+func get_font_map():
+	var file=FileAccess.open("res://assets/fonts/jp.txt",FileAccess.READ)
+	var font_map=file.get_as_text()
+	font_map=font_map.replace("\n","")
+	print(font_map.length())
+	file.close()
+	return font_map
+	

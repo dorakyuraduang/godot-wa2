@@ -1,10 +1,11 @@
-[gd_scene load_steps=152 format=3 uid="uid://dmufruyuv4wcg"]
+[gd_scene load_steps=153 format=3 uid="uid://dmufruyuv4wcg"]
 
 [ext_resource type="Script" path="res://src/components/wa2messagebox.gd" id="1_tv1cr"]
 [ext_resource type="Texture2D" uid="uid://dyh4udm10344k" path="res://assets/grp/sys_00001.tga" id="2_2btrp"]
 [ext_resource type="Texture2D" uid="uid://x4e8phecuebd" path="res://assets/grp/page_02.tga" id="2_6g2ja"]
 [ext_resource type="Texture2D" uid="uid://on255ij2s43i" path="res://assets/grp/sys_00000.tga" id="3_wovaf"]
 [ext_resource type="FontFile" uid="uid://8lmuk1m2rsdk" path="res://assets/fonts/simhei.ttf" id="4_1akk2"]
+[ext_resource type="Script" path="res://src/components/wa2_text.gd" id="5_jx4ot"]
 [ext_resource type="Texture2D" uid="uid://2x1csqfhceel" path="res://assets/grp/sys_00010.tga" id="6_fk6if"]
 [ext_resource type="Script" path="res://src/components/wa2button.gd" id="7_n7wa8"]
 
@@ -993,22 +994,10 @@ theme_override_constants/line_spacing = 0
 theme_override_fonts/font = ExtResource("4_1akk2")
 theme_override_font_sizes/font_size = 30
 
-[node name="TextLabel" type="Label" parent="."]
-custom_minimum_size = Vector2(900, 130)
-layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -400.0
-offset_top = 59.0
-offset_right = 500.0
-offset_bottom = 199.0
-grow_horizontal = 2
-scale = Vector2(1, 0.994)
-theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
-theme_override_constants/line_spacing = 10
-theme_override_fonts/font = ExtResource("4_1akk2")
-theme_override_font_sizes/font_size = 30
+[node name="Wa2Text" type="Node2D" parent="."]
+position = Vector2(240, 60)
+script = ExtResource("5_jx4ot")
+lan = 1
 
 [node name="AwaitSprite" type="AnimatedSprite2D" parent="."]
 visible = false

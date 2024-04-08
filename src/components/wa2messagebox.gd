@@ -2,7 +2,7 @@ extends Control
 class_name Wa2MessageBox
 signal wait_click
 @onready var name_label:Label=$NameLabel
-@onready var text_label:Label=$TextLabel
+@onready var text_label:Wa2Text=$Wa2Text
 @onready var wait_sprite:AnimatedSprite2D=$AwaitSprite
 @onready var label_sprite=$TextureRect3
 @onready var auto_sprite=$TextureRect4
@@ -13,7 +13,7 @@ func update_text():
 	wait_sprite.frame=0
 	text_label.text=Globals.cur_text
 	name_label.text=Globals.cur_name
-	wait_sprite.position=text_label.position+wait_position*Vector2(30,40)
+	wait_sprite.position=text_label.position+wait_position*Vector2(32,32)
 	Globals.text_state=1
 	text_label.visible_ratio=0.0
 func get_text_position(text:String):
