@@ -2,13 +2,22 @@ extends Control
 class_name Wa2Main
 func _ready():
 	Globals.main=self
+	Globals.video=$VideoStreamPlayer
 	Globals.viewport=$Wa2Viewport
 	Globals.message_box=$Wa2MessageBox
 	Globals.backlog=$Pages/BackLog
 	Globals.save_page=$Pages/SavePage
 	Globals.load_page=$Pages/LoadPage
 	Globals.title_menu_page=$Pages/TitleMenu
+	Globals.options_container=$Options
 	Globals.title_menu_page.open()
+	Globals.video.connect("finished",func ():
+		Globals.video.hide()
+		)
+	for i in Globals.options_container.get_child_count():
+		Globals.options_container.get_child(i).connect("button_down",func ():
+			Globals.select_idx=i
+			)
 	while (true):
 		await get_tree().process_frame
 		if Globals.game_state==1:
@@ -32,4 +41,3 @@ func _gui_input(event):
 				Globals.message_box.on(1)
 			else:
 				Globals.click_text_state=2
-

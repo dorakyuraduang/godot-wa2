@@ -1,4 +1,6 @@
 extends Node
+func _ready():
+	ProjectSettings.load_resource_pack("res://voice.pck")
 func get_bg_path(id,type,no)->String:
 	return "%sB%04d%01d%01d.tga"%[Consts.BG_IMAGE_PATH,id,no,type]
 func get_cg_path(id,no)->String:
@@ -8,6 +10,9 @@ func get_se_stream(id:int):
 		return load("%sSE_%04d.WAV"%[Consts.SE_PATH,id])
 	else:
 		return load("%sSE_%04d.OGG"%[Consts.SE_PATH,id])
+func get_video(id:int):
+	print("%smv%03d.mp4"%[Consts.MV_PATH,id])
+	return load("%smv%03d.mp4"%[Consts.MV_PATH,id])
 func get_bgm_stream( id:int,loop:=false):
 	if ResourceLoader.exists("%sBGM_%03d.OGG"%[Consts.BGM_PATH,id]):
 		return load("%sBGM_%03d.OGG"%[Consts.BGM_PATH,id])

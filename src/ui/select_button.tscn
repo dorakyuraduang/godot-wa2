@@ -1,0 +1,33 @@
+[gd_scene load_steps=8 format=3 uid="uid://dbkrpoypwo4ov"]
+
+[ext_resource type="Texture2D" uid="uid://bhqp4j7f1qy8d" path="res://assets/grp/sys_00200.tga" id="1_rj8yx"]
+[ext_resource type="Script" path="res://src/ui/select_button.gd" id="2_l1o2b"]
+[ext_resource type="Script" path="res://src/components/wa2_text.gd" id="3_2vlf8"]
+[ext_resource type="Texture2D" uid="uid://cqdqbv6rjr2am" path="res://assets/fonts/本体80.png" id="4_tyl4y"]
+[ext_resource type="Texture2D" uid="uid://cdcuw3a6b72wq" path="res://assets/fonts/袋影80.png" id="5_fmuxd"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kb1qh"]
+atlas = ExtResource("1_rj8yx")
+region = Rect2(0, 0, 784, 72)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hkjbd"]
+atlas = ExtResource("1_rj8yx")
+region = Rect2(0, 144, 784, 72)
+
+[node name="SelectButton" type="TextureButton"]
+offset_right = 40.0
+offset_bottom = 40.0
+texture_normal = SubResource("AtlasTexture_kb1qh")
+script = ExtResource("2_l1o2b")
+
+[node name="Wa2Text" type="Node2D" parent="."]
+position = Vector2(120, 20)
+script = ExtResource("3_2vlf8")
+font_texture = ExtResource("4_tyl4y")
+font_shadow_texture = ExtResource("5_fmuxd")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+texture = SubResource("AtlasTexture_hkjbd")

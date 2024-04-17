@@ -3,7 +3,7 @@ class_name DataSlot
 @onready var image=$TextureRect
 @onready var no_text=$No
 @onready var date_text=$Date
-@onready var text_label=$Label
+@onready var text_label=$Wa2Text
 @onready var no_data=$NoData
 @onready var exits_data=$ExistData
 var state=0

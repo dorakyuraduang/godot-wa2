@@ -10,3 +10,7 @@ assets/fonts
 *.apk
 *.idsig
 .VSCodeCounter/
+bin/
+android/
+assets/mv
+*.pck

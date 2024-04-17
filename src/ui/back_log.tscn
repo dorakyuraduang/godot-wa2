@@ -83,9 +83,9 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -426.0
+offset_left = -434.0
 offset_top = -331.0
-offset_right = 422.0
+offset_right = 430.0
 offset_bottom = 315.0
 grow_horizontal = 2
 grow_vertical = 2
@@ -99,6 +99,7 @@ theme_override_constants/separation = 0
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/HBoxContainer"]
 custom_minimum_size = Vector2(800, 0)
 layout_mode = 2
+size_flags_horizontal = 0
 theme_override_constants/separation = 0
 
 [node name="BackMessage" parent="MarginContainer/HBoxContainer/VBoxContainer" instance=ExtResource("4_54ako")]

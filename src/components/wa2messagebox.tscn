@@ -1,12 +1,13 @@
-[gd_scene load_steps=153 format=3 uid="uid://dmufruyuv4wcg"]
+[gd_scene load_steps=154 format=3 uid="uid://dmufruyuv4wcg"]
 
 [ext_resource type="Script" path="res://src/components/wa2messagebox.gd" id="1_tv1cr"]
 [ext_resource type="Texture2D" uid="uid://dyh4udm10344k" path="res://assets/grp/sys_00001.tga" id="2_2btrp"]
 [ext_resource type="Texture2D" uid="uid://x4e8phecuebd" path="res://assets/grp/page_02.tga" id="2_6g2ja"]
 [ext_resource type="Texture2D" uid="uid://on255ij2s43i" path="res://assets/grp/sys_00000.tga" id="3_wovaf"]
-[ext_resource type="FontFile" uid="uid://8lmuk1m2rsdk" path="res://assets/fonts/simhei.ttf" id="4_1akk2"]
+[ext_resource type="Texture2D" uid="uid://cqdqbv6rjr2am" path="res://assets/fonts/本体80.png" id="5_if6cf"]
 [ext_resource type="Script" path="res://src/components/wa2_text.gd" id="5_jx4ot"]
 [ext_resource type="Texture2D" uid="uid://2x1csqfhceel" path="res://assets/grp/sys_00010.tga" id="6_fk6if"]
+[ext_resource type="Texture2D" uid="uid://cdcuw3a6b72wq" path="res://assets/fonts/袋影80.png" id="6_o81wj"]
 [ext_resource type="Script" path="res://src/components/wa2button.gd" id="7_n7wa8"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_k573s"]
@@ -982,22 +983,18 @@ grow_horizontal = 2
 texture = ExtResource("3_wovaf")
 stretch_mode = 2
 
-[node name="NameLabel" type="Label" parent="."]
-custom_minimum_size = Vector2(800, 40)
-layout_mode = 1
-offset_left = 190.0
-offset_top = 15.0
-offset_right = 990.0
-offset_bottom = 47.0
-theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
-theme_override_constants/line_spacing = 0
-theme_override_fonts/font = ExtResource("4_1akk2")
-theme_override_font_sizes/font_size = 30
+[node name="NameText" type="Node2D" parent="."]
+position = Vector2(188, 16)
+script = ExtResource("5_jx4ot")
+font_texture = ExtResource("5_if6cf")
+font_shadow_texture = ExtResource("6_o81wj")
 
 [node name="Wa2Text" type="Node2D" parent="."]
 position = Vector2(240, 60)
 script = ExtResource("5_jx4ot")
-lan = 1
+font_texture = ExtResource("5_if6cf")
+font_shadow_texture = ExtResource("6_o81wj")
+text = "殺考舷剌閑闇季能継郎勿斯限"
 
 [node name="AwaitSprite" type="AnimatedSprite2D" parent="."]
 visible = false

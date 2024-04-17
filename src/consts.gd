@@ -1,9 +1,5 @@
 @tool
 extends Node
-@onready var cn_font_texture=preload("res://assets/fonts/本体80.png")
-@onready var jp_font_texture=preload("res://assets/fonts/本体80jp.png")
-@onready var jp_font_shadow_texture=preload("res://assets/fonts/袋影80jp.png")
-@onready var cn_font_shadow_texture=preload("res://assets/fonts/袋影80.png")
 enum ClickState{
 	NONE,
 	NEW_PAGE,
@@ -14,12 +10,13 @@ enum EventMode{
 	WAIT_TIME=1,
 	WAIT_VOICE=2,
 	WAIT_CLICK=4,
-	WAIT_SE=8
+	WAIT_SE=8,
+	WAIT_SELECT=16
 	
 }
 const MAX_BACK_INFO_COUNT:=100
 const VOICE_WAIT_FRAME=120
-const MAX_SE_CHANNELS=4
+const MAX_SE_CHANNELS=6
 const CHAR_IMAGE_PATH="res://assets/char/"
 const BG_IMAGE_PATH="res://assets/bak/"
 const SCRIPT_PATH="res://assets/script/"
@@ -27,6 +24,7 @@ const SE_PATH="res://assets/se/"
 const BGM_PATH="res://assets/bgm/"
 const VOICE_PATH="res://assets/voice/"
 const CG_IMAGE_PATH="res://assets/grp/"
+const MV_PATH="res://assets/mv/"
 enum Page{
 	TITLE_MENU,
 	GAME
@@ -36,18 +34,40 @@ const CHAR_POS={
 	1:Vector2(0,0),
 	2:Vector2(290,0),
 	3:Vector2(-380,0),
-	4:Vector2(380,0)
+	4:Vector2(380,0),
+	10:Vector2(480,0),
+	9:Vector2(160,0),
+	8:Vector2(-160,0),
+	7:Vector2(-480,0)
 }
 const CHAR_NAMES={
 	1:"kaz",
+	5:"mar",
 	35:"miy",
+	24:"aco",
+	25:"mih",
 	16:"you",
+	20:"Sat",
+	21:"hon",
+	22:"nak",
+	23:"say",
+	27:"ueh",
+	34:"saw",
 	2:"set",
+	3:"koh",
+	4:"izu",
 	10:"tak",
+	12:"chi",
 	11:"ioo",
+	17:"tan",
+	18:"shi",
+	30:"ham",
+	32:"kiz",
 	33:"suz",
 	19:"tom",
+	13:"pap",
 	14:"mam",
+	15:"oto",
 	31:"mat"
 }
 const CHAPTER=[

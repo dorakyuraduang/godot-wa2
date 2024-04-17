@@ -1,9 +1,10 @@
-[gd_scene load_steps=7 format=3 uid="uid://vhl58c04l614"]
+[gd_scene load_steps=8 format=3 uid="uid://vhl58c04l614"]
 
 [ext_resource type="Script" path="res://src/ui/data_slot.gd" id="1_vm0sp"]
 [ext_resource type="Texture2D" uid="uid://wm4sdsd3yv1x" path="res://assets/grp/sys_01010.tga" id="2_yye6e"]
 [ext_resource type="Script" path="res://src/ui/wa2number.gd" id="3_74ipk"]
-[ext_resource type="FontFile" uid="uid://8lmuk1m2rsdk" path="res://assets/fonts/simhei.ttf" id="4_t2knk"]
+[ext_resource type="Texture2D" uid="uid://cqdqbv6rjr2am" path="res://assets/fonts/本体80.png" id="5_6r5le"]
+[ext_resource type="Script" path="res://src/components/wa2_text.gd" id="5_e06n2"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_6o85h"]
 atlas = ExtResource("2_yye6e")
@@ -49,11 +50,9 @@ expand_mode = 1
 position = Vector2(188, 24)
 script = ExtResource("3_74ipk")
 
-[node name="Label" type="Label" parent="."]
-layout_mode = 0
-offset_left = 188.0
-offset_top = 46.0
-offset_right = 428.0
-offset_bottom = 67.0
-theme_override_fonts/font = ExtResource("4_t2knk")
-theme_override_font_sizes/font_size = 20
+[node name="Wa2Text" type="Node2D" parent="."]
+position = Vector2(188, 46)
+script = ExtResource("5_e06n2")
+font_texture = ExtResource("5_6r5le")
+font_size = 20
+shadow = false

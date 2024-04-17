@@ -4,13 +4,15 @@ extends Control
 @onready var sonw=$GPUParticles2D
 @onready var animation_player:AnimationPlayer=$AnimationPlayer
 func open():
+	Globals.play_video(0)
+	await Globals.video.finished
 	Globals.cur_page=1
 	show()
 	sonw.hide()
 	animation_player.play("RESET")
 	await animation_player.animation_finished
-	animation_player.play("logo")
-	await animation_player.animation_finished
+	#animation_player.play("logo")
+	#await animation_player.animation_finished
 	Sound.play_bgm(31)
 	animation_player.play("open")
 	await animation_player.animation_finished
@@ -33,12 +35,12 @@ func _on_start_button_down():
 
 func _on_start_1_button_down():
 	await  close()
-	Ws.load(6001)
+	Ws.load("6001")
 	Globals.game_state=1
 	Globals.cur_page=0
 func _on_start_2_button_down():
 	await  close()
-	Ws.load(6101)
+	Ws.load("6101")
 	Globals.game_state=1
 	Globals.cur_page=0
 
@@ -67,3 +69,21 @@ func close():
 	animation_player.play("close")
 	await animation_player.animation_finished
 	hide()
+
+
+func _on_ic_button_down():
+	await  close()
+	Ws.load("1001")
+	Globals.game_state=1
+	Globals.cur_page=0
+
+
+func _on_cc_button_down():
+	await  close()
+	Ws.load("2001")
+	Globals.game_state=1
+	Globals.cur_page=0
+
+
+func _on_coda_button_down():
+	pass # Replace with function body.

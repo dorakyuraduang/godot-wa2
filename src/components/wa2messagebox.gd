@@ -1,7 +1,7 @@
 extends Control
 class_name Wa2MessageBox
 signal wait_click
-@onready var name_label:Label=$NameLabel
+@onready var name_label:Wa2Text=$NameText
 @onready var text_label:Wa2Text=$Wa2Text
 @onready var wait_sprite:AnimatedSprite2D=$AwaitSprite
 @onready var label_sprite=$TextureRect3
@@ -45,7 +45,7 @@ func _physics_process(delta):
 		else:
 			wait_sprite.hide()
 		for btn:Wa2Button in button_list.get_children():
-			if Globals.text_state==2:
+			if Globals.text_state==2 or Globals.skip_flag:
 				btn.mouse_filter=Control.MOUSE_FILTER_STOP
 			else:
 				btn.mouse_filter=Control.MOUSE_FILTER_IGNORE
@@ -88,12 +88,11 @@ func _on_off_button_down():
 
 
 func _on_skip_button_down():
-	if Globals.text_state==2:
-		Globals.skip_flag=!Globals.skip_flag
-		if Globals.skip_flag:
-			skip_sprite.show()
-		else:
-			skip_sprite.hide()
+	Globals.skip_flag=!Globals.skip_flag
+	if Globals.skip_flag:
+		skip_sprite.show()
+	else:
+		skip_sprite.hide()
 
 func _on_auto_button_down():
 	if Globals.text_state==2:

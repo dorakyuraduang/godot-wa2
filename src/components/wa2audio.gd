@@ -12,6 +12,13 @@ func stop_stream(frame:int):
 		state=2
 	else:
 		stop()
+func set_volume(_volume,frame):
+	duration=frame
+	counter=0
+	volume=_volume
+	if duration>0:
+		state=1
+	volume_db=linear_to_db(volume)
 func play_stream(_stream:AudioStream,_loop:bool,frame:int,_volume:float):
 	duration=frame
 	seek(0)

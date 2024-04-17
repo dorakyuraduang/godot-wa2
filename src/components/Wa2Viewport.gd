@@ -25,14 +25,22 @@ func clear():
 	cur_texture.update(cur_image)
 	new_texture.update(new_image)
 func get_char_pos(pos:int,size:Vector2):
-	return Consts.CHAR_POS[pos]-Vector2(((size.x-1280)/2.0),0)
-func draw_image():
+	return Consts.CHAR_POS[pos]-Vector2(((size.x-1280)/2.0),(size.y-720))
+func draw_image(flag:=false):
 	#cur_image.save_png("res://a.png")
 	new_image.fill(Color(0,0,0,0))
+	var chars=[]
 	for i in Globals.char_info:
-		var image=Wa2Res.get_char_image(i,Globals.char_info[i].id)
-		var pos=get_char_pos(Globals.char_info[i].pos,image.get_size())
-		new_image.blend_rect(image,Rect2i(Vector2i.ZERO,image.get_size()),pos)
+		if Globals.char_info[i].show:
+			var char={}
+			char.image=Wa2Res.get_char_image(i,Globals.char_info[i].id)
+			char.pos=get_char_pos(Globals.char_info[i].pos,char.image.get_size())
+			chars.append(char)
+	chars.sort_custom(func (a,b):
+		return a.pos.x>b.pos.x
+		)
+	for char in chars:
+		new_image.blend_rect(char.image,Rect2i(Vector2i.ZERO,char.image.get_size()),char.pos)
 	texture_viewport.material.set_shader_parameter("time",0.0)
 	cur_texture.update(cur_image)
 	new_texture.update(new_image)

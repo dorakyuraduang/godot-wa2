@@ -23,8 +23,10 @@ func remove_timer():
 	remaining_frame=0
 	remove_event(Consts.EventMode.WAIT_TIME)
 func _physics_process(delta):
-	if Globals.game_state==0:
-		return
+	if has_event(Consts.EventMode.WAIT_SELECT):
+		if Globals.select_idx>=0:
+			remove_event(Consts.EventMode.WAIT_SELECT)
+			emit_signal("next")
 	if has_event(Consts.EventMode.WAIT_TIME):
 		remaining_frame-=1
 		if remaining_frame<=0 or Globals.is_skip():

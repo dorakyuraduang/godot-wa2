@@ -20,9 +20,13 @@ func play_bgm(id:int,loop_flag:bool=true,volume:int=255):
 func stop_bgm(frame:int=0):
 	bgm_audio.stop_stream(frame)
 func play_se(channel:int,id:int,loop_flag:bool,frame:int,volume:int):
-	se_audios[channel].play_stream(Wa2Res.get_se_stream(id),loop_flag,frame,volume/255.0)
+	if channel<10:
+		se_audios[channel].play_stream(Wa2Res.get_se_stream(id),loop_flag,frame,volume/255.0)
 func stop_se(channel:int,frame:int):
-	se_audios[channel].stop_stream(frame)
+	if channel<10:
+		se_audios[channel].stop_stream(frame)
+func set_se_volume(channel,volume,frame):
+	se_audios[channel].set_volume(volume/255.0,frame)
 func play_voice(file_name:String):
 	voice_audio.play_stream(Wa2Res.get_voice_stream(file_name),false,0,1)
 	#linear_to_db()
